@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: unus-wallet-site
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NEXT_TELEMETRY_DISABLED
+        value: 1
+    autoDeployTrigger: commit
+    healthCheckPath: /
