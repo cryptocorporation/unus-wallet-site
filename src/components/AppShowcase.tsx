@@ -21,7 +21,7 @@ type Scene = {
   title: string;
   body: string;
   bullets: string[];
-  stat: { value: string; label: string };
+  stat?: { value: string; label: string };
   Screen: React.ComponentType;
 };
 
@@ -59,7 +59,6 @@ const scenes: Scene[] = [
       "Slippage, gas estimate and ETA before you sign",
       "Gas paid in any token via account abstraction",
     ],
-    stat: { value: "1 tap", label: "to swap or bridge" },
     Screen: SwapScreen,
   },
   {
@@ -212,15 +211,17 @@ function SceneCopy({
         ))}
       </ul>
 
-      {/* Stat strip */}
-      <div className="mt-6 inline-flex items-baseline gap-3 self-start rounded-card border border-fg/10 bg-bg/70 backdrop-blur px-4 py-2.5">
-        <span className="font-display font-extrabold text-fg text-[clamp(1.5rem,2.6vw,2rem)] tracking-tight leading-none">
-          {stat.value}
-        </span>
-        <span className="text-[11px] uppercase tracking-[0.2em] text-fg-dim font-semibold">
-          {stat.label}
-        </span>
-      </div>
+      {/* Stat strip — optional per scene */}
+      {stat && (
+        <div className="mt-6 inline-flex items-baseline gap-3 self-start rounded-card border border-fg/10 bg-bg/70 backdrop-blur px-4 py-2.5">
+          <span className="font-display font-extrabold text-fg text-[clamp(1.5rem,2.6vw,2rem)] tracking-tight leading-none">
+            {stat.value}
+          </span>
+          <span className="text-[11px] uppercase tracking-[0.2em] text-fg-dim font-semibold">
+            {stat.label}
+          </span>
+        </div>
+      )}
     </motion.div>
   );
 }
