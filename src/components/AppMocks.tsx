@@ -616,6 +616,241 @@ export function TradeScreen() {
 }
 
 /* ============================================================
+   Stocks screen — Explore tokenized stocks
+   ============================================================ */
+
+export function StocksScreen() {
+  return (
+    <div className="flex-1 px-3 pt-2 flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <div className="size-6 rounded-md bg-bg-2 border border-fg/8 grid place-items-center">
+          <svg viewBox="0 0 24 24" className="size-3 text-fg" fill="none">
+            <path d="m15 6-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+        <div className="flex-1 text-center font-display font-extrabold text-[14px] text-fg">
+          Explore Stocks
+        </div>
+        <div className="size-6" />
+      </div>
+
+      <div className="rounded-md bg-bg-2 border border-fg/8 px-2 py-1.5 flex items-center gap-1.5">
+        <svg viewBox="0 0 24 24" className="size-3 text-fg-muted" fill="none">
+          <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="2" />
+          <path d="m20 20-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        <span className="text-[8px] text-fg-muted">Search stocks</span>
+      </div>
+
+      <div className="space-y-1.5 mt-1">
+        <StockRow ticker="TSLA" name="Tesla Inc" price="$495.00" change="+10.34%" up logo="tsla" />
+        <StockRow ticker="APPL" name="Apple Inc" price="$295.75" change="+10.34%" up logo="appl" />
+        <StockRow ticker="AMZN" name="Amazon.com Inc" price="$195.09" change="-9.34%" down logo="amzn" />
+        <StockRow ticker="MSFT" name="Microsoft Corp" price="$182.09" change="+9.34%" up logo="msft" />
+        <StockRow ticker="NVDA" name="NVIDIA Corp" price="$92.09" change="-5.34%" down logo="nvda" />
+        <StockRow ticker="GOOGL" name="Google" price="$202.09" change="+19.34%" up logo="googl" />
+        <StockRow ticker="META" name="Meta Platforms" price="$28.09" change="+5.34%" up logo="meta" />
+      </div>
+    </div>
+  );
+}
+
+function StockRow({
+  ticker,
+  name,
+  price,
+  change,
+  up,
+  down,
+  logo,
+}: {
+  ticker: string;
+  name: string;
+  price: string;
+  change: string;
+  up?: boolean;
+  down?: boolean;
+  logo: "tsla" | "appl" | "amzn" | "msft" | "nvda" | "googl" | "meta";
+}) {
+  return (
+    <div className="flex items-center gap-2 rounded-lg bg-bg-2 border border-fg/8 px-2 py-1.5">
+      <StockLogo kind={logo} />
+      <div className="flex-1 min-w-0">
+        <div className="text-[10px] font-bold text-fg leading-tight">{ticker}</div>
+        <div className="text-[8px] text-fg-muted leading-tight">{name}</div>
+      </div>
+      <div className="text-right">
+        <div className="text-[10px] font-semibold text-fg leading-tight">{price}</div>
+        <div
+          className={`text-[8px] font-semibold leading-tight ${
+            up ? "text-positive" : down ? "text-negative" : "text-fg-muted"
+          }`}
+        >
+          {change}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StockLogo({ kind }: { kind: string }) {
+  const wrap = "size-7 rounded-full grid place-items-center text-[10px] font-bold shrink-0";
+  if (kind === "tsla")
+    return (
+      <div className={wrap} style={{ background: "#e31937", color: "#fff" }}>
+        T
+      </div>
+    );
+  if (kind === "appl")
+    return (
+      <div className={wrap} style={{ background: "#fff", color: "#000", border: "1px solid rgba(10,10,10,0.12)" }}>
+
+      </div>
+    );
+  if (kind === "amzn")
+    return (
+      <div className={wrap} style={{ background: "#131a22", color: "#ff9900" }}>
+        a
+      </div>
+    );
+  if (kind === "msft")
+    return (
+      <div className={wrap} style={{ background: "#fff", border: "1px solid rgba(10,10,10,0.12)" }}>
+        <div className="grid grid-cols-2 gap-px size-3.5">
+          <div style={{ background: "#f25022" }} />
+          <div style={{ background: "#7fba00" }} />
+          <div style={{ background: "#00a4ef" }} />
+          <div style={{ background: "#ffb900" }} />
+        </div>
+      </div>
+    );
+  if (kind === "nvda")
+    return (
+      <div className={wrap} style={{ background: "#76b900", color: "#000" }}>
+        N
+      </div>
+    );
+  if (kind === "googl")
+    return (
+      <div className={wrap} style={{ background: "#fff", color: "#4285f4", border: "1px solid rgba(10,10,10,0.12)" }}>
+        G
+      </div>
+    );
+  if (kind === "meta")
+    return (
+      <div className={wrap} style={{ background: "#0668e1", color: "#fff" }}>
+        ∞
+      </div>
+    );
+  return <div className={wrap} style={{ background: "#9a9a9a", color: "#fff" }}>?</div>;
+}
+
+/* ============================================================
+   Place Order screen — LONG ETH/USDC
+   ============================================================ */
+
+export function PlaceOrderScreen() {
+  return (
+    <div className="flex-1 px-3 pt-2 flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <div className="size-6 rounded-md bg-bg-2 border border-fg/8 grid place-items-center">
+          <svg viewBox="0 0 24 24" className="size-3 text-fg" fill="none">
+            <path d="m15 6-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+        <div className="flex-1 text-center">
+          <div className="font-display font-extrabold text-[12px] text-positive tracking-wide">
+            LONG ETH/USDC
+          </div>
+          <div className="text-[8px] text-fg-muted">ETH</div>
+        </div>
+        <div className="size-6" />
+      </div>
+
+      {/* Balance card */}
+      <div className="rounded-lg bg-bg-2 border border-fg/8 p-2">
+        <div className="text-center">
+          <div className="font-display font-extrabold text-[16px] text-fg">$0.00 USDC</div>
+          <div className="text-[8px] text-fg-muted">Available to trade:</div>
+        </div>
+        <div className="grid grid-cols-2 gap-1.5 mt-2">
+          <div className="rounded-md bg-fg text-bg text-[9px] py-1.5 text-center font-semibold">
+            Deposit
+          </div>
+          <div className="rounded-md bg-bg border border-fg/10 text-fg text-[9px] py-1.5 text-center font-semibold">
+            Withdraw
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-md bg-bg-2 border border-fg/8 px-2 py-1.5 flex items-center justify-between">
+        <span className="text-[9px] text-fg-muted">Market</span>
+        <svg viewBox="0 0 24 24" className="size-2.5 text-fg-muted" fill="none">
+          <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" />
+        </svg>
+      </div>
+
+      <div>
+        <div className="text-[9px] text-fg font-semibold">Size (ETH)</div>
+        <div className="rounded-md bg-bg-2 border border-fg/8 px-2 py-1.5 mt-1 text-[12px] font-semibold text-fg">
+          1
+        </div>
+        <div className="text-[8px] text-fg-muted mt-0.5">≈ 93,037.50 USDC</div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 text-[8px] text-fg-muted">
+        <span className="inline-flex items-center gap-1">
+          <span className="size-2.5 rounded-sm border border-fg/30" />
+          Reduce Only
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="size-2.5 rounded-sm border border-fg/30" />
+          Take Profit / Stop Loss
+        </span>
+      </div>
+
+      <div>
+        <div className="text-[9px] text-fg font-semibold">Margin Mode</div>
+        <div className="grid grid-cols-2 gap-1.5 mt-1">
+          <div className="rounded-md bg-bg-2 border border-fg/8 text-[9px] py-1.5 text-center text-fg">
+            Cross
+          </div>
+          <div className="rounded-md bg-fg text-bg text-[9px] py-1.5 text-center font-semibold">
+            Isolated
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between text-[9px]">
+          <span className="text-fg font-semibold">Leverage</span>
+          <span className="rounded bg-bg-2 border border-fg/8 px-1.5 text-fg font-semibold">
+            55x
+          </span>
+        </div>
+        <div className="text-[8px] text-fg-muted mt-0.5">Max 25x for ETH</div>
+        <div className="relative h-1 rounded-full bg-fg/10 mt-1.5">
+          <div className="absolute inset-y-0 left-0 w-[78%] bg-fg rounded-full" />
+          <div className="absolute top-1/2 left-[78%] -translate-y-1/2 -translate-x-1/2 size-2.5 rounded-full bg-bg border-2 border-fg" />
+        </div>
+      </div>
+
+      <div className="rounded-md bg-bg-2 border border-fg/8 px-2 py-1.5 flex items-center justify-between">
+        <span className="text-[9px] text-fg-muted">Liquidation Price</span>
+        <span className="text-[10px] font-semibold text-fg">3,163.35</span>
+      </div>
+
+      <div
+        className="mt-auto rounded-md py-2 text-center text-[10px] font-bold text-white"
+        style={{ background: "#16a34a" }}
+      >
+        Place Market Long Order
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
    Transactions screen (dark variant)
    ============================================================ */
 

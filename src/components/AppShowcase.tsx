@@ -15,6 +15,8 @@ import {
   SwapScreen,
   TransactionsScreen,
   TradeScreen,
+  StocksScreen,
+  PlaceOrderScreen,
 } from "./AppMocks";
 
 type Scene = {
@@ -55,6 +57,18 @@ const scenes: Scene[] = [
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
     Screen: TradeScreen,
   },
+  {
+    eyebrow: "06 · Place an order",
+    title: "Long, short — with the controls of a real desk.",
+    body: "Pick your size, margin mode and leverage. See your liquidation price up front. Isolated by default so a wrong call never touches the rest of your book.",
+    Screen: PlaceOrderScreen,
+  },
+  {
+    eyebrow: "07 · Tokenized stocks",
+    title: "Wall Street, in your wallet.",
+    body: "Trade tokenized shares of Tesla, Apple, Amazon, Microsoft and more — onchain, 24/7, settled in USDC. Coming Q3 2026.",
+    Screen: StocksScreen,
+  },
 ];
 
 // 4-stop offset window for scene i of n scenes.
@@ -88,9 +102,9 @@ export default function AppShowcase() {
     <section
       ref={ref}
       className="relative"
-      // 60vh per scene feels responsive on a single scroll while still leaving
-      // plenty of hold time. Was 100vh which felt sluggish.
-      style={{ height: `${N * 60}vh` }}
+      // 50vh per scene — responsive on a single scroll. With 7 scenes total
+      // height is ~350vh, comparable to the previous 5-scene × 60vh budget.
+      style={{ height: `${N * 50}vh` }}
     >
       <div
         className="sticky top-0 h-screen overflow-hidden flex items-center"
