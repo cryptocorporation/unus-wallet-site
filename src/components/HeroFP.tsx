@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { Arrow } from "./icons";
 import {
@@ -11,8 +10,6 @@ import {
   TradeScreenDark,
 } from "./AppMocks";
 import PriceTicker from "./PriceTicker";
-
-const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -33,16 +30,55 @@ export default function HeroFP() {
     <section
       ref={ref}
       id="top"
-      className="relative isolate overflow-hidden min-h-svh pt-28 pb-4 bg-bg-2"
+      className="relative isolate overflow-hidden min-h-svh pt-28 pb-4"
+      style={{
+        // Solid gray gradient — never white. CSS-only, can't fail.
+        background:
+          "linear-gradient(180deg, #ececec 0%, #e6e6e6 50%, #efefef 100%)",
+      }}
     >
+      {/* Gradient blob backdrop — pure CSS, no canvas */}
       <motion.div
         style={{ y: canvasY, scale: canvasScale }}
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 overflow-hidden"
       >
-        <HeroCanvas />
+        <div
+          className="absolute -top-32 -left-32 w-[55%] h-[60%] rounded-full blur-3xl opacity-70 animate-float-slow"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(180,180,180,0.55) 0%, rgba(180,180,180,0) 70%)",
+          }}
+        />
+        <div
+          className="absolute -bottom-40 -right-40 w-[60%] h-[60%] rounded-full blur-3xl opacity-60 animate-float"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(140,140,140,0.5) 0%, rgba(140,140,140,0) 70%)",
+          }}
+        />
+        <div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70%] h-[40%] rounded-full blur-3xl opacity-50"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(200,200,200,0.5) 0%, rgba(200,200,200,0) 70%)",
+          }}
+        />
+        <div
+          className="absolute -bottom-20 -left-20 w-[40%] h-[50%] rounded-full blur-3xl opacity-50 animate-float-slow"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(160,160,160,0.45) 0%, rgba(160,160,160,0) 70%)",
+          }}
+        />
+        <div
+          className="absolute -top-20 -right-20 w-[45%] h-[50%] rounded-full blur-3xl opacity-55 animate-float"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(170,170,170,0.5) 0%, rgba(170,170,170,0) 70%)",
+          }}
+        />
       </motion.div>
-      <div className="absolute inset-0 -z-10 bg-grid opacity-50" />
-      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-b from-bg/0 via-transparent to-bg-2/40" />
+      <div className="absolute inset-0 -z-10 bg-grid opacity-40" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <motion.div
