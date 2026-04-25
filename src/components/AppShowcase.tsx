@@ -13,10 +13,7 @@ import {
   ReceiveScreen,
   DashboardScreen,
   SwapScreen,
-  TransactionsScreen,
   TradeScreen,
-  StocksScreen,
-  PlaceOrderScreen,
 } from "./AppMocks";
 
 type Scene = {
@@ -62,56 +59,20 @@ const scenes: Scene[] = [
       "Slippage, gas estimate and ETA before you sign",
       "Gas paid in any token via account abstraction",
     ],
-    stat: { value: "~10s", label: "median settlement" },
+    stat: { value: "1 tap", label: "to swap or bridge" },
     Screen: SwapScreen,
   },
   {
-    eyebrow: "04 · Receipts & history",
-    title: "Every send, swap and trade — receipted.",
-    body: "Confirmed, pending or failed: filter by address, asset or type. Search across every chain at once.",
-    bullets: [
-      "Filter by address, asset, kind or status",
-      "✓ Confirmed · ⏱ Pending · ✗ Failed at a glance",
-      "Tap any row for full TxHash + block details",
-    ],
-    stat: { value: "1", label: "search bar, every chain" },
-    Screen: TransactionsScreen,
-  },
-  {
-    eyebrow: "05 · Onchain trading",
+    eyebrow: "04 · Onchain trading",
     title: "Spot prices, candles, leverage.",
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
     bullets: [
-      "TradingView-grade candles · 1H / 1D / 1W / 1M / YTD",
+      "Real candle charts · 1H / 1D / 1W / 1M / YTD",
       "Long and short the same asset from one screen",
       "Self-custody throughout — no exchange deposit",
     ],
-    stat: { value: "Up to 40×", label: "leverage on perps" },
+    stat: { value: "Long & short", label: "self-custody throughout" },
     Screen: TradeScreen,
-  },
-  {
-    eyebrow: "06 · Place an order",
-    title: "Long, short — with the controls of a real desk.",
-    body: "Pick your size, margin mode and leverage. See your liquidation price up front. Isolated by default so a wrong call never touches the rest of your book.",
-    bullets: [
-      "Cross or Isolated margin per position",
-      "Liquidation price recalculated as you size",
-      "Take-Profit + Stop-Loss attached on entry",
-    ],
-    stat: { value: "Hyperliquid", label: "mainnet settlement" },
-    Screen: PlaceOrderScreen,
-  },
-  {
-    eyebrow: "07 · Tokenized stocks",
-    title: "Wall Street, in your wallet.",
-    body: "Trade tokenized shares of Tesla, Apple, Amazon, Microsoft, Nvidia, Google and Meta — onchain, settled in USDC, with the same custody as your crypto.",
-    bullets: [
-      "TSLA · APPL · AMZN · MSFT · NVDA · GOOGL · META",
-      "Settled in USDC — no brokerage account required",
-      "Trade alongside your perps and spot, one wallet",
-    ],
-    stat: { value: "Q3 2026", label: "tokenized stocks launch" },
-    Screen: StocksScreen,
   },
 ];
 
@@ -148,9 +109,10 @@ export default function AppShowcase() {
     <section
       ref={ref}
       className="relative"
-      // 50vh per scene — responsive on a single scroll. With 7 scenes total
-      // height is ~350vh, comparable to the previous 5-scene × 60vh budget.
-      style={{ height: `${N * 50}vh` }}
+      // 60vh per scene — with 4 scenes the showcase is ~240vh total, snappy
+      // (one wheel-notch advances visibly) while leaving each scene a long
+      // hold window after the tightened fade band.
+      style={{ height: `${N * 60}vh` }}
     >
       <div
         className="sticky top-0 h-screen overflow-hidden flex items-center"
