@@ -23,6 +23,8 @@ type Scene = {
   eyebrow: string;
   title: string;
   body: string;
+  bullets: string[];
+  stat: { value: string; label: string };
   Screen: React.ComponentType;
 };
 
@@ -31,54 +33,98 @@ const scenes: Scene[] = [
     eyebrow: "01 · Self-custody",
     title: "Your keys. Your coins. Your wallet.",
     body: "Generate, receive and hold across every chain you use. Non-custodial by default — Unus never holds your keys or touches your funds.",
+    bullets: [
+      "Keys generated on-device, never leave your phone",
+      "Hardware wallet pairing for cold storage",
+      "One address, every supported chain",
+    ],
+    stat: { value: "0", label: "keys held by Unus" },
     Screen: ReceiveScreen,
   },
   {
     eyebrow: "02 · Multi-chain dashboard",
     title: "All your assets. One clean view.",
     body: "ETH on Mainnet, BONK on Solana, FRAX on Arbitrum — every token and NFT, balanced and tracked side by side. Receive, send, swap or trade in a tap.",
+    bullets: [
+      "Native + ERC-20 tokens unified into one balance",
+      "Real-time prices and 24h PnL per asset",
+      "NFTs in the same place, no second app",
+    ],
+    stat: { value: "7+", label: "chains live, more in flight" },
     Screen: DashboardScreen,
   },
   {
     eyebrow: "03 · Cross-chain swaps",
     title: "Swap and bridge in one tap.",
     body: "Move value across chains without juggling bridges. The router picks the best route — slippage, gas and ETA are shown up front.",
+    bullets: [
+      "Optimal route auto-selected per swap",
+      "Slippage, gas estimate and ETA before you sign",
+      "Gas paid in any token via account abstraction",
+    ],
+    stat: { value: "~10s", label: "median settlement" },
     Screen: SwapScreen,
   },
   {
     eyebrow: "04 · Receipts & history",
     title: "Every send, swap and trade — receipted.",
     body: "Confirmed, pending or failed: filter by address, asset or type. Search across every chain at once.",
+    bullets: [
+      "Filter by address, asset, kind or status",
+      "✓ Confirmed · ⏱ Pending · ✗ Failed at a glance",
+      "Tap any row for full TxHash + block details",
+    ],
+    stat: { value: "1", label: "search bar, every chain" },
     Screen: TransactionsScreen,
   },
   {
     eyebrow: "05 · Onchain trading",
     title: "Spot prices, candles, leverage.",
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
+    bullets: [
+      "TradingView-grade candles · 1H / 1D / 1W / 1M / YTD",
+      "Long and short the same asset from one screen",
+      "Self-custody throughout — no exchange deposit",
+    ],
+    stat: { value: "Up to 40×", label: "leverage on perps" },
     Screen: TradeScreen,
   },
   {
     eyebrow: "06 · Place an order",
     title: "Long, short — with the controls of a real desk.",
     body: "Pick your size, margin mode and leverage. See your liquidation price up front. Isolated by default so a wrong call never touches the rest of your book.",
+    bullets: [
+      "Cross or Isolated margin per position",
+      "Liquidation price recalculated as you size",
+      "Take-Profit + Stop-Loss attached on entry",
+    ],
+    stat: { value: "Hyperliquid", label: "mainnet settlement" },
     Screen: PlaceOrderScreen,
   },
   {
     eyebrow: "07 · Tokenized stocks",
     title: "Wall Street, in your wallet.",
-    body: "Trade tokenized shares of Tesla, Apple, Amazon, Microsoft and more — onchain, 24/7, settled in USDC. Coming Q3 2026.",
+    body: "Trade tokenized shares of Tesla, Apple, Amazon, Microsoft, Nvidia, Google and Meta — onchain, settled in USDC, with the same custody as your crypto.",
+    bullets: [
+      "TSLA · APPL · AMZN · MSFT · NVDA · GOOGL · META",
+      "Settled in USDC — no brokerage account required",
+      "Trade alongside your perps and spot, one wallet",
+    ],
+    stat: { value: "Q3 2026", label: "tokenized stocks launch" },
     Screen: StocksScreen,
   },
 ];
 
 // 4-stop offset window for scene i of n scenes.
-// `entry`/`exit` widen the fade band; smaller numbers = punchier swap.
+// `entry`/`exit` widen the fade band; smaller numbers = punchier swap with
+// more hold time per scene. With 7 scenes at entry/exit = 0.018, each scene
+// holds at full opacity for ~10% of total scroll (~35vh of 50vh budget).
 function stops(i: number, n: number): [number, number, number, number] {
   const start = i / n;
   const end = (i + 1) / n;
   const eps = 1e-3;
-  const entry = 0.035; // narrow fade-in window (~3.5% of total scroll)
-  const exit = 0.035; // narrow fade-out window
+  const entry = 0.018;
+  const exit = 0.018;
   const a = Math.max(0, start - entry);
   const b = Math.min(1, Math.max(a + eps, start + entry));
   const c = Math.min(1, Math.max(b + eps, end - exit));
@@ -114,7 +160,7 @@ export default function AppShowcase() {
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
           {/* Left — scrolling copy */}
-          <div className="lg:col-span-7 relative h-[60vh] flex items-center order-2 lg:order-1">
+          <div className="lg:col-span-7 relative h-[72vh] flex items-center order-2 lg:order-1">
             {scenes.map((s, i) => (
               <SceneCopy key={s.eyebrow} index={i} total={N} progress={scrollYProgress} {...s} />
             ))}
@@ -163,6 +209,8 @@ function SceneCopy({
   eyebrow,
   title,
   body,
+  bullets,
+  stat,
 }: Scene & {
   index: number;
   total: number;
@@ -182,12 +230,35 @@ function SceneCopy({
         <span className="size-1.5 rounded-full bg-fg" />
         {eyebrow}
       </div>
-      <h2 className="mt-5 font-display text-[clamp(2rem,4.6vw,3.6rem)] leading-[1.04] tracking-[-0.035em] font-extrabold text-fg max-w-2xl">
+      <h2 className="mt-5 font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] tracking-[-0.035em] font-extrabold text-fg max-w-2xl">
         {title}
       </h2>
-      <p className="mt-5 text-[16px] leading-relaxed text-fg-muted max-w-xl">
+      <p className="mt-4 text-[15px] leading-relaxed text-fg-muted max-w-xl">
         {body}
       </p>
+
+      {/* Supporting bullets */}
+      <ul className="mt-5 space-y-2 max-w-xl">
+        {bullets.map((b) => (
+          <li
+            key={b}
+            className="flex items-start gap-2.5 text-[13.5px] leading-snug text-fg-muted"
+          >
+            <span className="mt-[7px] size-1.5 rounded-full bg-fg shrink-0" />
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Stat strip */}
+      <div className="mt-6 inline-flex items-baseline gap-3 self-start rounded-card border border-fg/10 bg-bg/70 backdrop-blur px-4 py-2.5">
+        <span className="font-display font-extrabold text-fg text-[clamp(1.5rem,2.6vw,2rem)] tracking-tight leading-none">
+          {stat.value}
+        </span>
+        <span className="text-[11px] uppercase tracking-[0.2em] text-fg-dim font-semibold">
+          {stat.label}
+        </span>
+      </div>
     </motion.div>
   );
 }
