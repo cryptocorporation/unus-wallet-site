@@ -31,11 +31,14 @@ export default function FooterFP() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14">
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <div className="flex items-center gap-2.5">
-              <Logo />
-              <span className="font-display font-bold tracking-tight text-xl text-fg">
-                Unus Wallet
-              </span>
+            <div className="flex items-center">
+              <img
+                src="/assets/Unus-Logo.svg"
+                alt="Unus Wallet"
+                width={126}
+                height={16}
+                className="h-7 w-auto"
+              />
             </div>
             <p className="mt-5 text-[14px] text-fg-muted max-w-sm leading-relaxed">
               One wallet, infinite possibilities. Omnichain finance, simplified
@@ -115,16 +118,3 @@ export default function FooterFP() {
   );
 }
 
-function Logo() {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-      <rect x="2" y="2" width="28" height="28" rx="9" fill="#0a0a0a" />
-      <path
-        d="M10 11v7a6 6 0 0 0 12 0v-7"
-        stroke="#fff"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}

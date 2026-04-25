@@ -36,11 +36,15 @@ export default function Nav() {
       )}
     >
       <div className="mx-auto max-w-7xl px-5 lg:px-8 h-16 flex items-center justify-between gap-4">
-        <a href="#top" className="flex items-center gap-2.5 group">
-          <Logo />
-          <span className="font-display font-bold tracking-tight text-[18px] text-deep">
-            Unus
-          </span>
+        <a href="#top" className="flex items-center group" aria-label="Unus Wallet">
+          {/* Brand wordmark */}
+          <img
+            src="/assets/Unus-Logo.svg"
+            alt="Unus Wallet"
+            width={94}
+            height={12}
+            className="h-5 w-auto"
+          />
         </a>
 
         <nav className="hidden lg:flex items-center gap-7">
@@ -127,22 +131,3 @@ export default function Nav() {
   );
 }
 
-function Logo() {
-  return (
-    <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-      <defs>
-        <linearGradient id="lg" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0%" stopColor="#d4d4d4" />
-          <stop offset="100%" stopColor="#2a2a2a" />
-        </linearGradient>
-      </defs>
-      <rect x="2" y="2" width="28" height="28" rx="9" fill="url(#lg)" />
-      <path
-        d="M10 11v7a6 6 0 0 0 12 0v-7"
-        stroke="#fff"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}

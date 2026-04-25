@@ -5,13 +5,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { SectionHeader } from "./CoreFeatures";
 
 const live = [
-  { name: "Ethereum", color: "#627eea" },
-  { name: "Arbitrum", color: "#28a0f0" },
-  { name: "Optimism", color: "#ff0420" },
-  { name: "Base", color: "#0052ff" },
-  { name: "BNB Chain", color: "#f3ba2f" },
-  { name: "Polygon", color: "#8247e5" },
-  { name: "Avalanche", color: "#e84142" },
+  { name: "Ethereum", icon: "/assets/Ethereum.svg" },
+  { name: "Arbitrum", icon: "/assets/Arbitrum.svg" },
+  { name: "Optimism", icon: "/assets/Optimism.svg" },
+  { name: "Base", icon: "/assets/Base.svg" },
+  { name: "BNB Chain", icon: "/assets/BNB.svg" },
+  { name: "Polygon", icon: "/assets/Polygon.svg" },
+  { name: "Avalanche", icon: "/assets/Avalanche.svg" },
 ];
 
 const soon = ["Solana", "Cosmos", "zkSync Era", "Additional L2s"];
@@ -115,22 +115,22 @@ function ChainPill({
   chain,
   small,
 }: {
-  chain: { name: string; color: string };
+  chain: { name: string; icon: string };
   small?: boolean;
 }) {
+  const size = small ? 20 : 28;
   return (
     <div
       className={`flex items-center gap-3 rounded-pill glass border border-fg/5 ${
         small ? "px-4 py-2.5" : "px-5 py-3"
       }`}
     >
-      <span
-        className={small ? "size-5 rounded-full border" : "size-7 rounded-full border"}
-        style={{
-          background: `radial-gradient(circle at 30% 30%, ${chain.color}, ${chain.color}66 70%, transparent)`,
-          borderColor: `${chain.color}55`,
-          boxShadow: `0 0 16px ${chain.color}40`,
-        }}
+      <img
+        src={chain.icon}
+        alt=""
+        width={size}
+        height={size}
+        className={small ? "size-5" : "size-7"}
       />
       <span className={`${small ? "text-[12.5px]" : "text-[14px]"} text-fg whitespace-nowrap`}>
         {chain.name}

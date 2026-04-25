@@ -37,48 +37,25 @@ export default function HeroFP() {
           "linear-gradient(180deg, #ececec 0%, #e6e6e6 50%, #efefef 100%)",
       }}
     >
-      {/* Gradient blob backdrop — pure CSS, no canvas */}
+      {/* Hero video backdrop — branded animation looped silently */}
       <motion.div
         style={{ y: canvasY, scale: canvasScale }}
         className="absolute inset-0 -z-10 overflow-hidden"
       >
-        <div
-          className="absolute -top-32 -left-32 w-[55%] h-[60%] rounded-full blur-3xl opacity-70 animate-float-slow"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(180,180,180,0.55) 0%, rgba(180,180,180,0) 70%)",
-          }}
+        <video
+          src="/assets/Hero-Section.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-hidden
         />
-        <div
-          className="absolute -bottom-40 -right-40 w-[60%] h-[60%] rounded-full blur-3xl opacity-60 animate-float"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(140,140,140,0.5) 0%, rgba(140,140,140,0) 70%)",
-          }}
-        />
-        <div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[70%] h-[40%] rounded-full blur-3xl opacity-50"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(200,200,200,0.5) 0%, rgba(200,200,200,0) 70%)",
-          }}
-        />
-        <div
-          className="absolute -bottom-20 -left-20 w-[40%] h-[50%] rounded-full blur-3xl opacity-50 animate-float-slow"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(160,160,160,0.45) 0%, rgba(160,160,160,0) 70%)",
-          }}
-        />
-        <div
-          className="absolute -top-20 -right-20 w-[45%] h-[50%] rounded-full blur-3xl opacity-55 animate-float"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(170,170,170,0.5) 0%, rgba(170,170,170,0) 70%)",
-          }}
-        />
+        {/* Soft wash so foreground text stays readable on top of the video */}
+        <div className="absolute inset-0 bg-bg-2/30 mix-blend-luminosity" />
       </motion.div>
-      <div className="absolute inset-0 -z-10 bg-grid opacity-40" />
+      <div className="absolute inset-0 -z-10 bg-grid opacity-25" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <motion.div
