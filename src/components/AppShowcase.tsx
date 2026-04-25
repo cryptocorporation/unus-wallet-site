@@ -88,7 +88,9 @@ export default function AppShowcase() {
     <section
       ref={ref}
       className="relative"
-      style={{ height: `${N * 100}vh` }}
+      // 60vh per scene feels responsive on a single scroll while still leaving
+      // plenty of hold time. Was 100vh which felt sluggish.
+      style={{ height: `${N * 60}vh` }}
     >
       <div
         className="sticky top-0 h-screen overflow-hidden flex items-center"
