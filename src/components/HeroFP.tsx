@@ -33,7 +33,7 @@ export default function HeroFP() {
     <section
       ref={ref}
       id="top"
-      className="relative isolate overflow-hidden min-h-svh pt-28 pb-4"
+      className="relative isolate overflow-hidden min-h-svh pt-28 pb-4 bg-bg-2"
     >
       <motion.div
         style={{ y: canvasY, scale: canvasScale }}
@@ -42,7 +42,7 @@ export default function HeroFP() {
         <HeroCanvas />
       </motion.div>
       <div className="absolute inset-0 -z-10 bg-grid opacity-50" />
-      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-b from-bg/0 via-transparent to-bg/60" />
+      <div className="absolute inset-0 -z-10 pointer-events-none bg-gradient-to-b from-bg/0 via-transparent to-bg-2/40" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
         <motion.div

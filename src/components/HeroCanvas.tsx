@@ -47,12 +47,13 @@ const fragmentShader = /* glsl */ `
 
     float t = uTime * 0.05;
 
-    // Monochrome stops — match the app's white + gray aesthetic
-    vec3 white  = vec3(1.0);
-    vec3 paper  = vec3(0.961);   // #f5f5f5
-    vec3 silver = vec3(0.831);   // #d4d4d4
-    vec3 stone  = vec3(0.620);   // #9e9e9e
-    vec3 ink    = vec3(0.165);   // #2a2a2a
+    // Monochrome stops — base is a soft warm-ish gray so the canvas never
+    // reads as pure white at the edges/corners.
+    vec3 white  = vec3(0.945);   // #f1f1f1 — the actual "base" tone
+    vec3 paper  = vec3(0.910);   // #e8e8e8
+    vec3 silver = vec3(0.780);   // #c7c7c7
+    vec3 stone  = vec3(0.560);   // #8f8f8f
+    vec3 ink    = vec3(0.155);   // #282828
     vec3 cream  = white;
     vec3 peach  = paper;
     vec3 coral  = silver;
@@ -76,16 +77,17 @@ const fragmentShader = /* glsl */ `
     float b5 = blob(p, c5, 0.55);
 
     vec3 col = white;
-    col = mix(col, paper,  b1 * 0.85);
-    col = mix(col, silver, b2 * 0.55);
-    col = mix(col, paper,  b3 * 0.85);
-    col = mix(col, stone,  b4 * 0.30);
-    col = mix(col, silver, b5 * 0.45);
+    col = mix(col, paper,  b1 * 0.95);
+    col = mix(col, silver, b2 * 0.75);
+    col = mix(col, paper,  b3 * 0.95);
+    col = mix(col, stone,  b4 * 0.45);
+    col = mix(col, silver, b5 * 0.65);
 
     float field = fbm(p * 1.4 + vec2(t, t * 0.7));
-    col = mix(col, silver, smoothstep(0.55, 0.92, field) * 0.20);
+    col = mix(col, silver, smoothstep(0.45, 0.88, field) * 0.30);
 
-    float vig = smoothstep(2.0, 0.0, length(p));
+    // Vignette stays mostly active even at corners (was 2.0/0.0 — now 3.0/0.0).
+    float vig = smoothstep(3.0, 0.0, length(p));
     col = mix(white, col, vig);
 
     float grain = (hash(uv * uResolution + uTime) - 0.5) * 0.014;
