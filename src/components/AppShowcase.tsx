@@ -11,6 +11,7 @@ import {
 import {
   PhoneFrame,
   DashboardScreen,
+  SwapScreen,
   TradeScreen,
 } from "./AppMocks";
 
@@ -37,7 +38,18 @@ const scenes: Scene[] = [
     Screen: DashboardScreen,
   },
   {
-    eyebrow: "02 · Onchain trading",
+    eyebrow: "02 · Cross-chain swaps",
+    title: "Swap and bridge in one tap.",
+    body: "Move value across chains without juggling bridges. The router picks the best route — slippage, gas and ETA are shown up front.",
+    bullets: [
+      "Optimal route auto-selected per swap",
+      "Slippage, gas estimate and ETA before you sign",
+      "Gas paid in any token via account abstraction",
+    ],
+    Screen: SwapScreen,
+  },
+  {
+    eyebrow: "03 · Onchain trading",
     title: "Spot prices, candles, leverage.",
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
     bullets: [
