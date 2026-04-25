@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  cubicBezier,
+  MotionValue,
+} from "framer-motion";
 import {
   PhoneFrame,
   ReceiveScreen,
@@ -66,7 +72,8 @@ function stops(i: number, n: number): [number, number, number, number] {
   return [a, b, c, d];
 }
 
-const screenEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+// useTransform's `ease` option requires a function, not a bezier tuple.
+const screenEase = cubicBezier(0.22, 1, 0.36, 1);
 
 export default function AppShowcase() {
   const ref = useRef<HTMLElement>(null);
