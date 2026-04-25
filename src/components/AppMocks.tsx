@@ -895,61 +895,45 @@ export function ReceiveScreen() {
 }
 
 function QRPlaceholder() {
-  // Deterministic stylized QR (decorative — same pattern on server + client to
-  // avoid hydration mismatch). Cell-on if (x*x + y*y*y + x*y + 7) bit is set.
-  const cells = Array.from({ length: 21 * 21 }, (_, i) => {
-    const x = i % 21;
-    const y = Math.floor(i / 21);
-    const h = (x * 73856093) ^ (y * 19349663) ^ (x * y * 83492791);
-    return ((h >>> 8) & 1) === 1;
-  });
+  // Deterministic stylized QR rendered as a SINGLE inline SVG instead of
+  // 441 absolutely-positioned divs. Critical perf: this lives inside a
+  // sticky-scrolling phone, so we want the whole QR to be one paintable
+  // layer for the compositor.
+  const N = 21;
+  const cells: { x: number; y: number }[] = [];
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      const isAnchor =
+        (y < 7 && x < 7) || (y < 7 && x > 13) || (y > 13 && x < 7);
+      if (isAnchor) {
+        const cy = y % 7;
+        const cx = x % 7;
+        const filled =
+          cx === 0 ||
+          cx === 6 ||
+          cy === 0 ||
+          cy === 6 ||
+          (cx >= 2 && cx <= 4 && cy >= 2 && cy <= 4);
+        if (filled) cells.push({ x, y });
+      } else {
+        const h = (x * 73856093) ^ (y * 19349663) ^ (x * y * 83492791);
+        if (((h >>> 8) & 1) === 1) cells.push({ x, y });
+      }
+    }
+  }
   return (
     <div className="bg-white p-1.5 rounded-md">
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "repeat(21, 1fr)",
-          gap: 0,
-          width: 100,
-          height: 100,
-        }}
+      <svg
+        width={100}
+        height={100}
+        viewBox={`0 0 ${N} ${N}`}
+        shapeRendering="crispEdges"
+        aria-hidden
       >
-        {cells.map((on, i) => {
-          // anchor squares — top-left, top-right, bottom-left
-          const r = Math.floor(i / 21);
-          const c = i % 21;
-          const isAnchor =
-            (r < 7 && c < 7) || (r < 7 && c > 13) || (r > 13 && c < 7);
-          if (isAnchor) {
-            // draw frame on edges of 7x7 corner
-            const inFrame =
-              (r === 0 || r === 6 || c === 0 || c === 6 ||
-                ((r >= 2 && r <= 4) && (c >= 2 && c <= 4) &&
-                  !(r === 2 && c === 2) && !(r === 4 && c === 4) && !(r === 4 && c === 2) && !(r === 2 && c === 4)) ||
-                (r === 3 && c === 3));
-            const cornerR = r % 7;
-            const cornerC = c % 7;
-            const isFilled =
-              cornerR === 0 ||
-              cornerR === 6 ||
-              cornerC === 0 ||
-              cornerC === 6 ||
-              (cornerR >= 2 && cornerR <= 4 && cornerC >= 2 && cornerC <= 4);
-            return (
-              <div
-                key={i}
-                style={{ background: isFilled ? "#0a0a0a" : "transparent" }}
-              />
-            );
-          }
-          return (
-            <div
-              key={i}
-              style={{ background: on ? "#0a0a0a" : "transparent" }}
-            />
-          );
-        })}
-      </div>
+        {cells.map((c, i) => (
+          <rect key={i} x={c.x} y={c.y} width="1" height="1" fill="#0a0a0a" />
+        ))}
+      </svg>
     </div>
   );
 }

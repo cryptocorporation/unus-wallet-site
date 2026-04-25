@@ -78,7 +78,10 @@ export default function AppShowcase() {
       className="relative"
       style={{ height: `${N * 100}vh` }}
     >
-      <div className="sticky top-0 h-screen overflow-hidden flex items-center">
+      <div
+        className="sticky top-0 h-screen overflow-hidden flex items-center"
+        style={{ contain: "layout paint" }}
+      >
         <Backdrop progress={scrollYProgress} />
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
@@ -143,7 +146,7 @@ function SceneCopy({
 
   return (
     <motion.div
-      style={{ opacity, y }}
+      style={{ opacity, y, willChange: "transform, opacity" }}
       className="absolute inset-0 flex flex-col justify-center"
     >
       <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-fg-muted self-start font-semibold">
@@ -228,13 +231,13 @@ function PinnedPhone({
 
   return (
     <motion.div
-      style={{ rotate: tilt, y: yFloat }}
+      style={{ rotate: tilt, y: yFloat, willChange: "transform" }}
       className="relative"
     >
       {/* Decorative pulse ring */}
       <motion.div
-        style={{ rotate: ringRotate }}
-        className="absolute -inset-6 rounded-[3rem] opacity-30"
+        style={{ rotate: ringRotate, willChange: "transform" }}
+        className="absolute -inset-6 rounded-[3rem] opacity-30 pointer-events-none"
       >
         <div
           className="w-full h-full rounded-[3rem] blur-2xl"
@@ -292,7 +295,7 @@ function ScreenLayer({
 
   return (
     <motion.div
-      style={{ opacity, y, scale }}
+      style={{ opacity, y, scale, willChange: "transform, opacity" }}
       className="absolute inset-0"
     >
       <Screen />
