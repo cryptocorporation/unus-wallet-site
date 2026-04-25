@@ -10,9 +10,7 @@ import {
 } from "framer-motion";
 import {
   PhoneFrame,
-  ReceiveScreen,
   DashboardScreen,
-  SwapScreen,
   TradeScreen,
 } from "./AppMocks";
 
@@ -27,19 +25,7 @@ type Scene = {
 
 const scenes: Scene[] = [
   {
-    eyebrow: "01 · Self-custody",
-    title: "Your keys. Your coins. Your wallet.",
-    body: "Generate, receive and hold across every chain you use. Non-custodial by default — Unus never holds your keys or touches your funds.",
-    bullets: [
-      "Keys generated on-device, never leave your phone",
-      "Hardware wallet pairing for cold storage",
-      "One address, every supported chain",
-    ],
-    stat: { value: "0", label: "keys held by Unus" },
-    Screen: ReceiveScreen,
-  },
-  {
-    eyebrow: "02 · Multi-chain dashboard",
+    eyebrow: "01 · Multi-chain dashboard",
     title: "All your assets. One clean view.",
     body: "ETH on Mainnet, BONK on Solana, FRAX on Arbitrum — every token and NFT, balanced and tracked side by side. Receive, send, swap or trade in a tap.",
     bullets: [
@@ -51,18 +37,7 @@ const scenes: Scene[] = [
     Screen: DashboardScreen,
   },
   {
-    eyebrow: "03 · Cross-chain swaps",
-    title: "Swap and bridge in one tap.",
-    body: "Move value across chains without juggling bridges. The router picks the best route — slippage, gas and ETA are shown up front.",
-    bullets: [
-      "Optimal route auto-selected per swap",
-      "Slippage, gas estimate and ETA before you sign",
-      "Gas paid in any token via account abstraction",
-    ],
-    Screen: SwapScreen,
-  },
-  {
-    eyebrow: "04 · Onchain trading",
+    eyebrow: "02 · Onchain trading",
     title: "Spot prices, candles, leverage.",
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
     bullets: [
