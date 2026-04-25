@@ -51,17 +51,22 @@ const scenes: Scene[] = [
   },
 ];
 
-// 4-stop offset window centered on scene index. Strictly increasing in [0, 1].
+// 4-stop offset window for scene i of n scenes.
+// `entry`/`exit` widen the fade band; smaller numbers = punchier swap.
 function stops(i: number, n: number): [number, number, number, number] {
   const start = i / n;
   const end = (i + 1) / n;
   const eps = 1e-3;
-  const a = Math.max(0, start - 0.06);
-  const b = Math.min(1, Math.max(a + eps, start + 0.04));
-  const c = Math.min(1, Math.max(b + eps, end - 0.04));
-  const d = Math.min(1, Math.max(c + eps, end + 0.06));
+  const entry = 0.035; // narrow fade-in window (~3.5% of total scroll)
+  const exit = 0.035; // narrow fade-out window
+  const a = Math.max(0, start - entry);
+  const b = Math.min(1, Math.max(a + eps, start + entry));
+  const c = Math.min(1, Math.max(b + eps, end - exit));
+  const d = Math.min(1, Math.max(c + eps, end + exit));
   return [a, b, c, d];
 }
+
+const screenEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 export default function AppShowcase() {
   const ref = useRef<HTMLElement>(null);
@@ -141,12 +146,13 @@ function SceneCopy({
   progress: MotionValue<number>;
 }) {
   const s = stops(index, total);
-  const opacity = useTransform(progress, s, [0, 1, 1, 0]);
-  const y = useTransform(progress, s, [40, 0, 0, -40]);
+  const opacity = useTransform(progress, s, [0, 1, 1, 0], { ease: screenEase });
+  const y = useTransform(progress, s, [50, 0, 0, -50], { ease: screenEase });
+  const zIndex = useTransform(progress, s, [0, 2, 2, 1]);
 
   return (
     <motion.div
-      style={{ opacity, y, willChange: "transform, opacity" }}
+      style={{ opacity, y, zIndex, willChange: "transform, opacity" }}
       className="absolute inset-0 flex flex-col justify-center"
     >
       <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-fg-muted self-start font-semibold">
@@ -289,13 +295,24 @@ function ScreenLayer({
   Screen: React.ComponentType;
 }) {
   const s = stops(index, total);
-  const opacity = useTransform(progress, s, [0, 1, 1, 0]);
-  const y = useTransform(progress, s, [24, 0, 0, -24]);
-  const scale = useTransform(progress, s, [0.96, 1, 1, 0.96]);
+  // Sharper opacity ramp via tightened stops + ease
+  const opacity = useTransform(progress, s, [0, 1, 1, 0], { ease: screenEase });
+  // Pronounced slide: incoming rises from below (+56), outgoing exits upward (-56)
+  const y = useTransform(progress, s, [56, 0, 0, -56], { ease: screenEase });
+  // Tiny depth pop on entry
+  const scale = useTransform(progress, s, [0.94, 1, 1, 0.98], { ease: screenEase });
+  // Higher z while a scene is active, so the incoming screen lands on top
+  const zIndex = useTransform(progress, s, [0, 2, 2, 1]);
 
   return (
     <motion.div
-      style={{ opacity, y, scale, willChange: "transform, opacity" }}
+      style={{
+        opacity,
+        y,
+        scale,
+        zIndex,
+        willChange: "transform, opacity",
+      }}
       className="absolute inset-0"
     >
       <Screen />
