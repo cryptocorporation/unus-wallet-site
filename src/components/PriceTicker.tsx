@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useVelocity,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 type Token = {
   symbol: string;
@@ -149,6 +155,18 @@ export default function PriceTicker() {
   const [isLive, setIsLive] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<string | null>(null);
   const aborted = useRef(false);
+
+  // Scroll-driven motion: pills surge horizontally with scroll velocity,
+  // tilt slightly to convey speed, then settle when the scroll stops.
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400,
+  });
+  // Velocity is in px/s. Cap the boost at +/- 140px / +/- 4°.
+  const tickerX = useTransform(smoothVelocity, [-3000, 0, 3000], [120, 0, -120]);
+  const tickerSkew = useTransform(smoothVelocity, [-3000, 0, 3000], [3, 0, -3]);
 
   useEffect(() => {
     aborted.current = false;
@@ -300,6 +318,11 @@ export default function PriceTicker() {
             "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
         }}
       >
+        {/* Scroll-velocity-driven outer wrapper. Compounds with the inner
+            CSS marquee so pills always drift, but surge with scroll. */}
+        <motion.div
+          style={{ x: tickerX, skewX: tickerSkew, willChange: "transform" }}
+        >
         <div className="flex gap-2.5 animate-marquee w-max">
           {loop.map((t, i) => (
             <div
@@ -344,6 +367,7 @@ export default function PriceTicker() {
             </div>
           ))}
         </div>
+        </motion.div>
       </div>
     </motion.div>
   );
