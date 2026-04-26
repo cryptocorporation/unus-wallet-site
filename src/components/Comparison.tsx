@@ -25,7 +25,15 @@ export default function Comparison() {
           title={
             <>
               See how Unus Wallet's smart agent{" "}
-              <span className="text-gradient">outperforms.</span>
+              <span className="relative inline-block whitespace-nowrap">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-3 -inset-y-1 rounded-2xl bg-fg -rotate-2 -z-10"
+                />
+                <span className="relative text-bg italic px-1">
+                  outperforms.
+                </span>
+              </span>
             </>
           }
           subtitle="Simpler workflows and unified cross-chain access — without the friction of traditional Web3 wallets."
