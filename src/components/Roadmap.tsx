@@ -137,19 +137,21 @@ function PhaseCard({
   total: number;
   progress: MotionValue<number>;
 }) {
+  const isCurrent = phase.status === "current";
   const center = (index + 0.5) / total;
   const scale = useTransform(
     progress,
     [Math.max(0, center - 0.2), center, Math.min(1, center + 0.2)],
-    [0.9, 1, 0.9]
+    isCurrent ? [0.96, 1, 0.96] : [0.9, 1, 0.9]
   );
+  // Current phase never dims — it's the only "shipping now" milestone, so it
+  // stays visually dominant even when scrolled past. Other phases fade as
+  // they leave center.
   const opacity = useTransform(
     progress,
     [Math.max(0, center - 0.25), center, Math.min(1, center + 0.25)],
-    [0.5, 1, 0.5]
+    isCurrent ? [1, 1, 1] : [0.5, 1, 0.5]
   );
-
-  const isCurrent = phase.status === "current";
 
   // Card surface — Current is inverted (solid black card, white content),
   // upcoming phases stay light glass.
