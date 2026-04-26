@@ -89,13 +89,13 @@ export default function FooterFP() {
             <div className="text-[11px] uppercase tracking-[0.22em] text-fg-dim mb-4 font-semibold">
               Socials
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-nowrap items-center gap-2">
               {socials.map(({ Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="size-10 rounded-full bg-bg border border-fg/10 grid place-items-center text-fg-muted hover:text-fg hover:border-fg/30 transition-colors"
+                  className="size-9 sm:size-10 shrink-0 rounded-full bg-bg border border-fg/10 grid place-items-center text-fg-muted hover:text-fg hover:border-fg/30 transition-colors"
                 >
                   <Icon className="size-4" />
                 </a>
