@@ -70,18 +70,22 @@ const scenes: Scene[] = [
 
 // 4-stop offset window for scene i of n scenes.
 // `entry`/`exit` widen the fade band; smaller numbers = punchier swap with
-// more hold time per scene. With 7 scenes at entry/exit = 0.018, each scene
-// holds at full opacity for ~10% of total scroll (~35vh of 50vh budget).
+// more hold time per scene.
+//
+// Last scene gets a hard pin to progress=1.0 — no fade-out. Otherwise the
+// final scene briefly fades to nothing right at the section's tail and the
+// next section starts taking over before the scene was readable.
 function stops(i: number, n: number): [number, number, number, number] {
   const start = i / n;
   const end = (i + 1) / n;
+  const isLast = i === n - 1;
   const eps = 1e-3;
   const entry = 0.018;
-  const exit = 0.018;
+  const exit = isLast ? 0 : 0.018;
   const a = Math.max(0, start - entry);
   const b = Math.min(1, Math.max(a + eps, start + entry));
-  const c = Math.min(1, Math.max(b + eps, end - exit));
-  const d = Math.min(1, Math.max(c + eps, end + exit));
+  const c = isLast ? 1 : Math.min(1, Math.max(b + eps, end - exit));
+  const d = isLast ? 1 : Math.min(1, Math.max(c + eps, end + exit));
   return [a, b, c, d];
 }
 
@@ -101,10 +105,10 @@ export default function AppShowcase() {
     <section
       ref={ref}
       className="relative"
-      // 60vh per scene — with 4 scenes the showcase is ~240vh total, snappy
-      // (one wheel-notch advances visibly) while leaving each scene a long
-      // hold window after the tightened fade band.
-      style={{ height: `${N * 60}vh` }}
+      // 75vh per scene — with 4 scenes the showcase is ~300vh total. Gives
+      // every scene (including the last one, Onchain trading) plenty of
+      // hold time before the section's sticky pin releases.
+      style={{ height: `${N * 75}vh` }}
     >
       <div
         className="sticky top-0 h-screen overflow-hidden flex items-center"
