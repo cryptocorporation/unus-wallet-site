@@ -157,16 +157,17 @@ export default function PriceTicker() {
   const aborted = useRef(false);
 
   // Scroll-driven motion: pills surge horizontally with scroll velocity,
-  // tilt slightly to convey speed, then settle when the scroll stops.
+  // then settle smoothly. Soft spring + capped range avoids the jolt that
+  // happens when the spring overshoots into the CSS marquee's own
+  // transform.
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400,
+    damping: 30,
+    stiffness: 180,
+    mass: 0.8,
   });
-  // Velocity is in px/s. Cap the boost at +/- 140px / +/- 4°.
-  const tickerX = useTransform(smoothVelocity, [-3000, 0, 3000], [120, 0, -120]);
-  const tickerSkew = useTransform(smoothVelocity, [-3000, 0, 3000], [3, 0, -3]);
+  const tickerX = useTransform(smoothVelocity, [-2000, 0, 2000], [60, 0, -60]);
 
   useEffect(() => {
     aborted.current = false;
@@ -318,12 +319,16 @@ export default function PriceTicker() {
             "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
         }}
       >
-        {/* Scroll-velocity-driven outer wrapper. Compounds with the inner
-            CSS marquee so pills always drift, but surge with scroll. */}
+        {/* Scroll-velocity-driven outer wrapper. Both layers get
+            will-change so they sit on separate GPU layers and don't
+            invalidate each other's composite. */}
         <motion.div
-          style={{ x: tickerX, skewX: tickerSkew, willChange: "transform" }}
+          style={{ x: tickerX, willChange: "transform" }}
         >
-        <div className="flex gap-2.5 animate-marquee w-max">
+        <div
+          className="flex gap-2.5 animate-marquee w-max"
+          style={{ willChange: "transform", backfaceVisibility: "hidden" }}
+        >
           {loop.map((t, i) => (
             <div
               key={`${t.symbol}-${i}`}
