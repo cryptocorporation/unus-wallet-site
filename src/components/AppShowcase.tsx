@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import {
   motion,
   useScroll,
@@ -8,12 +9,6 @@ import {
   cubicBezier,
   MotionValue,
 } from "framer-motion";
-import {
-  PhoneFrame,
-  DashboardScreen,
-  SwapScreen,
-  TradeScreen,
-} from "./AppMocks";
 
 type Scene = {
   eyebrow: string;
@@ -21,10 +16,21 @@ type Scene = {
   body: string;
   bullets: string[];
   stat?: { value: string; label: string };
-  Screen: React.ComponentType;
+  image: string;
 };
 
 const scenes: Scene[] = [
+  {
+    eyebrow: "Welcome",
+    title: "Meet your new wallet.",
+    body: "One self-custody wallet for every chain you use. Hold, swap, trade and track your portfolio without juggling bridges, gas tokens or accounts.",
+    bullets: [
+      "Self-custody by default — keys live on your device",
+      "Built around a single, calm dashboard",
+      "Designed for clarity, built for speed",
+    ],
+    image: "/assets/trans/welcome.png",
+  },
   {
     eyebrow: "01 · Multi-chain dashboard",
     title: "All your assets. One clean view.",
@@ -35,7 +41,7 @@ const scenes: Scene[] = [
       "NFTs in the same place, no second app",
     ],
     stat: { value: "7+", label: "chains live, more in flight" },
-    Screen: DashboardScreen,
+    image: "/assets/trans/1.png",
   },
   {
     eyebrow: "02 · Cross-chain swaps",
@@ -46,7 +52,7 @@ const scenes: Scene[] = [
       "Slippage, gas estimate and ETA before you sign",
       "Gas paid in any token via account abstraction",
     ],
-    Screen: SwapScreen,
+    image: "/assets/trans/2.png",
   },
   {
     eyebrow: "03 · Onchain trading",
@@ -58,7 +64,7 @@ const scenes: Scene[] = [
       "Self-custody throughout — no exchange deposit",
     ],
     stat: { value: "Long & short", label: "self-custody throughout" },
-    Screen: TradeScreen,
+    image: "/assets/trans/3.png",
   },
 ];
 
@@ -274,33 +280,19 @@ function PinnedPhone({
   progress: MotionValue<number>;
   total: number;
 }) {
-  // Subtle parallax — phone tilts slightly through the journey
-  const tilt = useTransform(progress, [0, 1], [-3, 3]);
-  const yFloat = useTransform(progress, [0, 1], [-12, 12]);
-  const ringRotate = useTransform(progress, [0, 1], [0, 90]);
+  // Subtle parallax — the device renders breathe slightly through the journey
+  const tilt = useTransform(progress, [0, 1], [-2, 2]);
+  const yFloat = useTransform(progress, [0, 1], [-10, 10]);
 
   return (
     <motion.div
       style={{ rotate: tilt, y: yFloat, willChange: "transform" }}
-      className="relative"
+      // The trans/*.png mockups are rendered at ~6720x6000 (~1.12 : 1).
+      // The container locks that aspect so layered <Image> children fill
+      // it without distorting.
+      className="relative w-full max-w-[480px] mx-auto aspect-[112/100]"
     >
-      {/* Decorative pulse ring */}
-      <motion.div
-        style={{ rotate: ringRotate, willChange: "transform" }}
-        className="absolute -inset-6 rounded-[3rem] opacity-30 pointer-events-none"
-      >
-        <div
-          className="w-full h-full rounded-[3rem] blur-2xl"
-          style={{
-            background:
-              "conic-gradient(from 0deg, transparent, rgba(10,10,10,0.15), transparent 30%, rgba(10,10,10,0.1) 60%, transparent 75%)",
-          }}
-        />
-      </motion.div>
-
-      <PhoneFrame width={260} elevated>
-        <ScreenStack progress={progress} total={total} />
-      </PhoneFrame>
+      <ScreenStack progress={progress} total={total} />
     </motion.div>
   );
 }
@@ -320,7 +312,8 @@ function ScreenStack({
           index={i}
           total={total}
           progress={progress}
-          Screen={s.Screen}
+          image={s.image}
+          alt={s.title}
         />
       ))}
     </div>
@@ -331,21 +324,19 @@ function ScreenLayer({
   index,
   total,
   progress,
-  Screen,
+  image,
+  alt,
 }: {
   index: number;
   total: number;
   progress: MotionValue<number>;
-  Screen: React.ComponentType;
+  image: string;
+  alt: string;
 }) {
   const s = stops(index, total);
-  // Sharper opacity ramp via tightened stops + ease
   const opacity = useTransform(progress, s, [0, 1, 1, 0], { ease: screenEase });
-  // Pronounced slide: incoming rises from below (+56), outgoing exits upward (-56)
   const y = useTransform(progress, s, [56, 0, 0, -56], { ease: screenEase });
-  // Tiny depth pop on entry
   const scale = useTransform(progress, s, [0.94, 1, 1, 0.98], { ease: screenEase });
-  // Higher z while a scene is active, so the incoming screen lands on top
   const zIndex = useTransform(progress, s, [0, 2, 2, 1]);
 
   return (
@@ -359,7 +350,15 @@ function ScreenLayer({
       }}
       className="absolute inset-0"
     >
-      <Screen />
+      <Image
+        src={image}
+        alt={alt}
+        fill
+        sizes="(max-width: 1024px) 90vw, 480px"
+        className="object-contain select-none"
+        priority={index === 0}
+        draggable={false}
+      />
     </motion.div>
   );
 }
