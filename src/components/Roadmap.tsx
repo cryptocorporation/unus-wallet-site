@@ -175,7 +175,7 @@ function PhaseCard({
   return (
     <motion.div
       style={{ scale, opacity }}
-      className={`shrink-0 w-[78vw] md:w-[60vw] lg:w-[48vw] xl:w-[40vw] rounded-card p-8 md:p-10 relative overflow-hidden ${cardClass}`}
+      className={`shrink-0 w-[82vw] sm:w-[72vw] md:w-[60vw] lg:w-[48vw] xl:w-[40vw] rounded-card p-6 sm:p-8 md:p-10 relative overflow-hidden ${cardClass}`}
     >
       {/* Decorative blob (skip on current — it's already solid) */}
       {!isCurrent && (

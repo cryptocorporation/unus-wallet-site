@@ -162,7 +162,7 @@ function PhoneArc({ parallax }: { parallax: MotionValue<number> }) {
   const cBRY = useTransform(parallax, [0, 1], [0, 60]);
 
   return (
-    <div className="relative mx-auto max-w-7xl h-[500px] sm:h-[540px] flex items-end justify-center">
+    <div className="relative mx-auto max-w-7xl h-[460px] sm:h-[540px] flex items-end justify-center">
       <div className="absolute inset-x-0 bottom-[-15%] h-[80%] glow-brand blur-3xl" />
 
       {/* Silver coins */}
@@ -191,24 +191,24 @@ function PhoneArc({ parallax }: { parallax: MotionValue<number> }) {
         <SilverCoin size={92} delay={1.8} />
       </motion.div>
 
-      {/* Back-left phone — Transactions */}
+      {/* Back-left phone — Transactions (hidden on mobile to prevent overlap) */}
       <motion.div
         initial={{ opacity: 0, y: 60, rotate: -10, x: -30 }}
         animate={{ opacity: 1, y: 0, rotate: -8, x: 0 }}
         transition={{ duration: 1, delay: 0.35, ease }}
-        className="absolute left-1/2 -translate-x-[80%] bottom-0 z-10 origin-bottom-right"
+        className="hidden sm:block absolute left-1/2 -translate-x-[80%] bottom-0 z-10 origin-bottom-right"
       >
         <PhoneFrame width={200} dark>
           <TransactionsScreenDark />
         </PhoneFrame>
       </motion.div>
 
-      {/* Back-right phone — Trade */}
+      {/* Back-right phone — Trade (hidden on mobile) */}
       <motion.div
         initial={{ opacity: 0, y: 60, rotate: 10, x: 30 }}
         animate={{ opacity: 1, y: 0, rotate: 8, x: 0 }}
         transition={{ duration: 1, delay: 0.45, ease }}
-        className="absolute left-1/2 translate-x-[-20%] bottom-0 z-10 origin-bottom-left"
+        className="hidden sm:block absolute left-1/2 translate-x-[-20%] bottom-0 z-10 origin-bottom-left"
       >
         <PhoneFrame width={200} dark>
           <TradeScreenDark />

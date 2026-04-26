@@ -108,7 +108,7 @@ export default function AppShowcase() {
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
           {/* Left — scrolling copy */}
-          <div className="lg:col-span-7 relative h-[72vh] flex items-center order-2 lg:order-1">
+          <div className="lg:col-span-7 relative h-[68vh] sm:h-[72vh] flex items-center order-2 lg:order-1">
             {scenes.map((s, i) => (
               <SceneCopy key={s.eyebrow} index={i} total={N} progress={scrollYProgress} {...s} />
             ))}

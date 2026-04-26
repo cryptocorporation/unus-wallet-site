@@ -50,12 +50,12 @@ export default function Comparison() {
 
           <div className="rounded-card overflow-hidden border border-fg/10 shadow-[0_30px_80px_-30px_rgba(10,10,10,0.18)] bg-bg">
             {/* Header */}
-            <div className="grid grid-cols-[1.4fr_1fr_1fr] text-[11px] uppercase tracking-[0.2em] border-b border-fg/8">
-              <div className="px-6 py-5 text-fg-dim font-semibold">Feature</div>
-              <div className="px-6 py-5 text-center text-fg-dim font-semibold">
+            <div className="grid grid-cols-[1.5fr_1fr_1.1fr] text-[9.5px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.2em] border-b border-fg/8">
+              <div className="px-3 py-4 sm:px-6 sm:py-5 text-fg-dim font-semibold">Feature</div>
+              <div className="px-3 py-4 sm:px-6 sm:py-5 text-center text-fg-dim font-semibold">
                 Other Wallets
               </div>
-              <div className="px-6 py-5 text-center bg-fg text-bg font-bold relative">
+              <div className="px-3 py-4 sm:px-6 sm:py-5 text-center bg-fg text-bg font-bold relative">
                 <div className="inline-flex items-center gap-2">
                   <span className="size-1.5 rounded-full bg-positive" />
                   Unus Wallet
@@ -74,15 +74,15 @@ export default function Comparison() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className={`grid grid-cols-[1.4fr_1fr_1fr] items-center text-[14.5px] ${
+                className={`grid grid-cols-[1.5fr_1fr_1.1fr] items-center text-[12.5px] sm:text-[14.5px] ${
                   i % 2 ? "bg-fg/[0.02]" : ""
                 }`}
               >
-                <div className="px-6 py-5 text-fg font-medium">{r.label}</div>
-                <div className="px-6 py-5 text-center">
+                <div className="px-3 py-4 sm:px-6 sm:py-5 text-fg font-medium">{r.label}</div>
+                <div className="px-3 py-4 sm:px-6 sm:py-5 text-center">
                   <Cell value={r.others} />
                 </div>
-                <div className="px-6 py-5 text-center bg-fg/[0.05] border-l-2 border-fg">
+                <div className="px-3 py-4 sm:px-6 sm:py-5 text-center bg-fg/[0.05] border-l-2 border-fg">
                   <Cell value={r.unus} highlight />
                 </div>
               </motion.div>
