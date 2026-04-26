@@ -149,44 +149,82 @@ function PhaseCard({
     [0.5, 1, 0.5]
   );
 
+  const isCurrent = phase.status === "current";
+
+  // Card surface — Current is inverted (solid black card, white content),
+  // upcoming phases stay light glass.
+  const cardClass = isCurrent
+    ? "bg-fg text-bg border-2 border-fg shadow-[0_30px_80px_-20px_rgba(10,10,10,0.6)]"
+    : "glass-strong border border-fg/10";
+
+  const labelClass = isCurrent
+    ? "rounded-pill bg-positive text-white px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] font-bold inline-flex items-center gap-2 shadow-[0_8px_18px_-6px_rgba(22,163,74,0.55)]"
+    : phase.status === "next"
+      ? "inline-flex items-center gap-2 rounded-pill glass px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-fg-muted"
+      : "inline-flex items-center gap-2 rounded-pill glass px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-fg-dim";
+
+  const counterClass = isCurrent
+    ? "text-[11px] uppercase tracking-[0.22em] font-bold text-bg/70"
+    : "text-[11px] uppercase tracking-[0.22em] font-medium text-fg-dim";
+
+  const bodyTextClass = isCurrent ? "text-bg" : "text-fg";
+  const itemTextClass = isCurrent ? "text-bg/85" : "text-fg-muted";
+
   return (
     <motion.div
       style={{ scale, opacity }}
-      className="shrink-0 w-[78vw] md:w-[60vw] lg:w-[48vw] xl:w-[40vw] rounded-card glass-strong p-8 md:p-10 relative overflow-hidden"
+      className={`shrink-0 w-[78vw] md:w-[60vw] lg:w-[48vw] xl:w-[40vw] rounded-card p-8 md:p-10 relative overflow-hidden ${cardClass}`}
     >
-      <div
-        className="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-40"
-        style={{ background: phase.accent }}
-      />
+      {/* Decorative blob (skip on current — it's already solid) */}
+      {!isCurrent && (
+        <div
+          className="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-30"
+          style={{ background: phase.accent }}
+        />
+      )}
+
+      {/* "Live now" pulse ring on the current card */}
+      {isCurrent && (
+        <>
+          <div className="absolute -top-3 -right-3 size-20 rounded-full bg-positive/20 blur-2xl" />
+          <span className="absolute top-6 right-6 inline-flex items-center gap-1.5 rounded-pill bg-positive text-white px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] font-bold">
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex size-1.5 rounded-full bg-white opacity-70 animate-ping" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-white" />
+            </span>
+            Shipping now
+          </span>
+        </>
+      )}
 
       <div className="flex items-center justify-between gap-4">
-        <div className="inline-flex items-center gap-2 rounded-pill glass px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-fg-muted">
-          {phase.status === "current" && (
-            <span
-              className="size-1.5 rounded-full animate-pulse"
-              style={{ background: phase.accent }}
-            />
+        <div className={labelClass}>
+          {isCurrent && (
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-2 rounded-full bg-white opacity-70 animate-ping" />
+              <span className="relative inline-flex size-2 rounded-full bg-white" />
+            </span>
           )}
           {phase.status === "next" && (
-            <span
-              className="size-1.5 rounded-full"
-              style={{ background: phase.accent }}
-            />
+            <span className="size-1.5 rounded-full bg-fg" />
           )}
           {phase.status === "later" && (
             <span className="size-1.5 rounded-full bg-fg-dim" />
           )}
           {phase.label}
         </div>
-        <div
-          className="text-[11px] uppercase tracking-[0.2em] font-medium"
-          style={{ color: phase.accent }}
-        >
+        <div className={counterClass}>
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </div>
       </div>
 
-      <div className="mt-6 font-display text-[clamp(2.4rem,5vw,4rem)] tracking-[-0.02em] leading-[1]">
+      <div
+        className={`mt-6 font-display font-extrabold tracking-[-0.025em] leading-none ${bodyTextClass} ${
+          isCurrent
+            ? "text-[clamp(2.8rem,5.5vw,4.4rem)]"
+            : "text-[clamp(2.4rem,5vw,4rem)]"
+        }`}
+      >
         {phase.quarter}
       </div>
 
@@ -194,17 +232,16 @@ function PhaseCard({
         {phase.items.map((it) => (
           <li
             key={it}
-            className="flex items-start gap-3 text-[14px] text-fg-muted"
+            className={`flex items-start gap-3 text-[14px] ${itemTextClass}`}
           >
             <span
-              className="mt-0.5 size-5 rounded-full grid place-items-center shrink-0"
-              style={{
-                background: `${phase.accent}1f`,
-                border: `1px solid ${phase.accent}55`,
-                color: phase.accent,
-              }}
+              className={`mt-0.5 size-5 rounded-full grid place-items-center shrink-0 ${
+                isCurrent
+                  ? "bg-positive text-white"
+                  : "bg-fg/8 border border-fg/15 text-fg"
+              }`}
             >
-              <Check className="size-3" />
+              <Check className="size-3" strokeWidth={2.5} />
             </span>
             <span>{it}</span>
           </li>
