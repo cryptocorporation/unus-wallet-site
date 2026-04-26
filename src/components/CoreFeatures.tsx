@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Spark, Picture, Gas, Brain, Bolt } from "./icons";
+import { Swap, Spark, Picture, Gas, Brain, Bolt } from "./icons";
 
 const tags = [
   "Cross-chain swaps",
@@ -13,6 +13,12 @@ const tags = [
 ];
 
 const features = [
+  {
+    icon: Swap,
+    title: "Cross-Chain Swaps",
+    body: "Instantly exchange assets across multiple blockchains with seamless interoperability.",
+    color: "#0a0a0a",
+  },
   {
     icon: Spark,
     title: "Airdrop Catcher",
