@@ -10,29 +10,89 @@ type Token = {
   change: string;
   up: boolean;
   color: string;
-  letter: string;
+  logo: string;
 };
 
 // Pair definitions for Binance public spot tickers (no API key needed,
 // CORS-enabled). USDT itself isn't traded against itself so we hard-code it
-// at $1.00 — it's a stablecoin.
+// at $1.00. Logos are CoinGecko-hosted PNGs at stable URLs.
 const PAIRS: Array<{
   symbol: string;
   pair: string | null;
   name: string;
   color: string;
-  letter: string;
+  logo: string;
 }> = [
-  { symbol: "BTC", pair: "BTCUSDT", name: "Bitcoin", color: "#f7931a", letter: "₿" },
-  { symbol: "ETH", pair: "ETHUSDT", name: "Ethereum", color: "#627eea", letter: "Ξ" },
-  { symbol: "SOL", pair: "SOLUSDT", name: "Solana", color: "#9945ff", letter: "S" },
-  { symbol: "BNB", pair: "BNBUSDT", name: "BNB", color: "#f3ba2f", letter: "B" },
-  { symbol: "AVAX", pair: "AVAXUSDT", name: "Avalanche", color: "#e84142", letter: "A" },
-  { symbol: "DOGE", pair: "DOGEUSDT", name: "Dogecoin", color: "#c2a633", letter: "Ð" },
-  { symbol: "ADA", pair: "ADAUSDT", name: "Cardano", color: "#3cc8c8", letter: "A" },
-  { symbol: "TRX", pair: "TRXUSDT", name: "TRON", color: "#ef4444", letter: "T" },
-  { symbol: "BAND", pair: "BANDUSDT", name: "Band Protocol", color: "#1a1a1a", letter: "B" },
-  { symbol: "USDT", pair: null, name: "Tether", color: "#26a17b", letter: "₮" },
+  {
+    symbol: "BTC",
+    pair: "BTCUSDT",
+    name: "Bitcoin",
+    color: "#f7931a",
+    logo: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png",
+  },
+  {
+    symbol: "ETH",
+    pair: "ETHUSDT",
+    name: "Ethereum",
+    color: "#627eea",
+    logo: "https://assets.coingecko.com/coins/images/279/small/ethereum.png",
+  },
+  {
+    symbol: "SOL",
+    pair: "SOLUSDT",
+    name: "Solana",
+    color: "#9945ff",
+    logo: "https://assets.coingecko.com/coins/images/4128/small/solana.png",
+  },
+  {
+    symbol: "BNB",
+    pair: "BNBUSDT",
+    name: "BNB",
+    color: "#f3ba2f",
+    logo: "https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png",
+  },
+  {
+    symbol: "AVAX",
+    pair: "AVAXUSDT",
+    name: "Avalanche",
+    color: "#e84142",
+    logo: "https://assets.coingecko.com/coins/images/12559/small/Avalanche_Circle_RedWhite_Trans.png",
+  },
+  {
+    symbol: "DOGE",
+    pair: "DOGEUSDT",
+    name: "Dogecoin",
+    color: "#c2a633",
+    logo: "https://assets.coingecko.com/coins/images/5/small/dogecoin.png",
+  },
+  {
+    symbol: "ADA",
+    pair: "ADAUSDT",
+    name: "Cardano",
+    color: "#3cc8c8",
+    logo: "https://assets.coingecko.com/coins/images/975/small/cardano.png",
+  },
+  {
+    symbol: "TRX",
+    pair: "TRXUSDT",
+    name: "TRON",
+    color: "#ef4444",
+    logo: "https://assets.coingecko.com/coins/images/1094/small/tron-logo.png",
+  },
+  {
+    symbol: "BAND",
+    pair: "BANDUSDT",
+    name: "Band Protocol",
+    color: "#1a1a1a",
+    logo: "https://assets.coingecko.com/coins/images/9545/small/band-protocol.png",
+  },
+  {
+    symbol: "USDT",
+    pair: null,
+    name: "Tether",
+    color: "#26a17b",
+    logo: "https://assets.coingecko.com/coins/images/325/small/Tether.png",
+  },
 ];
 
 const FALLBACK: Token[] = PAIRS.map((p) => ({
@@ -42,7 +102,7 @@ const FALLBACK: Token[] = PAIRS.map((p) => ({
   change: "—",
   up: true,
   color: p.color,
-  letter: p.letter,
+  logo: p.logo,
 }));
 
 function formatPrice(value: number): string {
@@ -87,7 +147,7 @@ export default function PriceTicker() {
   const [tokens, setTokens] = useState<Token[]>(FALLBACK);
   const [marketChange, setMarketChange] = useState<number | null>(null);
   const [isLive, setIsLive] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<string | null>(null);
   const aborted = useRef(false);
 
   useEffect(() => {
@@ -103,7 +163,6 @@ export default function PriceTicker() {
 
         const next: Token[] = PAIRS.map((p) => {
           if (!p.pair) {
-            // USDT — stable, hardcode
             return {
               symbol: p.symbol,
               name: p.name,
@@ -111,7 +170,7 @@ export default function PriceTicker() {
               change: "+0.01%",
               up: true,
               color: p.color,
-              letter: p.letter,
+              logo: p.logo,
             };
           }
           const tick = map.get(p.pair);
@@ -123,7 +182,7 @@ export default function PriceTicker() {
               change: "—",
               up: true,
               color: p.color,
-              letter: p.letter,
+              logo: p.logo,
             };
           }
           const priceNum = parseFloat(tick.lastPrice);
@@ -135,11 +194,11 @@ export default function PriceTicker() {
             change: formatChange(changeNum),
             up: changeNum >= 0,
             color: p.color,
-            letter: p.letter,
+            logo: p.logo,
           };
         });
 
-        // Compute simple-average market sentiment (excluding USDT)
+        // Simple-average market sentiment (excluding USDT)
         let sum = 0;
         let count = 0;
         for (const p of PAIRS) {
@@ -157,9 +216,14 @@ export default function PriceTicker() {
         setTokens(next);
         setMarketChange(avg);
         setIsLive(true);
-        setLastUpdate(new Date());
+        // Format on the client to avoid SSR/locale mismatch.
+        const now = new Date();
+        setLastUpdate(
+          `${String(now.getHours()).padStart(2, "0")}:${String(
+            now.getMinutes()
+          ).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`
+        );
       } catch {
-        // Network/CORS/rate-limit blip — keep prior values, mark stale
         setIsLive(false);
       }
     }
@@ -201,34 +265,27 @@ export default function PriceTicker() {
               />
             </span>
             <span className="font-semibold text-fg">Crypto Market</span>
-            {headerChange ? (
-              <span
-                className="font-semibold"
-                style={{ color: headerUp ? "#16a34a" : "#ef4444" }}
-              >
-                {headerChange}
-              </span>
-            ) : (
-              <span className="text-fg-dim">syncing…</span>
-            )}
+            <span
+              className="font-semibold tabular-nums"
+              style={{
+                color: headerChange
+                  ? headerUp
+                    ? "#16a34a"
+                    : "#ef4444"
+                  : "var(--color-fg-dim)",
+              }}
+            >
+              {headerChange ?? "syncing…"}
+            </span>
             <span className="text-fg-dim">· past 24h</span>
           </div>
           <div className="hidden sm:flex items-center gap-2 text-fg-dim">
-            <span>{isLive ? "Live" : "Stale"}</span>
+            <span>{isLive ? "Live" : "Offline"}</span>
             <span>·</span>
             <span>USD</span>
-            {lastUpdate && (
-              <>
-                <span>·</span>
-                <span>
-                  {lastUpdate.toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  })}
-                </span>
-              </>
-            )}
+            <span suppressHydrationWarning>
+              {lastUpdate ? `· ${lastUpdate}` : ""}
+            </span>
           </div>
         </div>
       </div>
@@ -250,10 +307,18 @@ export default function PriceTicker() {
               className="flex items-center gap-2.5 rounded-full border border-fg/10 bg-bg/80 backdrop-blur-md pl-1 pr-3.5 py-1"
             >
               <div
-                className="size-6 rounded-full grid place-items-center text-[11px] font-bold text-white shrink-0"
-                style={{ background: t.color }}
+                className="size-6 rounded-full overflow-hidden bg-white shrink-0 grid place-items-center"
+                style={{ borderColor: `${t.color}55` }}
               >
-                {t.letter}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={t.logo}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="size-6 object-contain"
+                  loading="lazy"
+                />
               </div>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-[12px] font-semibold text-fg">
