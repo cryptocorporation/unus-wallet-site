@@ -16,10 +16,8 @@ export default function FinalCTA() {
         >
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-fg" />
-            {/* DeFi animation as a centered focal element. Container matches
-                the asset's native 1836×1104 aspect (~1.66:1) so the whole
-                frame is visible without cropping; soft alpha fade at the
-                edges keeps it from looking like a hard rectangular sticker. */}
+            {/* DeFi animation as a centered focal element. Lower opacity now
+                that the dark text-protection layer below sits on top of it. */}
             <div
               aria-hidden
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[640px] pointer-events-none"
@@ -37,9 +35,21 @@ export default function FinalCTA() {
                 aria-hidden
                 loading="lazy"
                 decoding="async"
-                className="w-full h-auto opacity-55 mix-blend-screen"
+                className="w-full h-auto opacity-30 mix-blend-screen"
               />
             </div>
+            {/* Text-protection radial — opaque dark in the center where the
+                headline + CTAs sit, fading to transparent at the edges so
+                the GIF still reads at the corners. Keeps the H2 legible no
+                matter what frame the animation is on. */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse 60% 70% at center, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.45) 55%, rgba(10,10,10,0) 90%)",
+              }}
+            />
             <div className="absolute inset-0 bg-grid opacity-15" />
             <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-white/4 blur-3xl" />
           </div>
