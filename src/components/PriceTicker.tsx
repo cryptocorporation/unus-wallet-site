@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useVelocity,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion } from "framer-motion";
 
 type Token = {
   symbol: string;
@@ -155,19 +149,6 @@ export default function PriceTicker() {
   const [isLive, setIsLive] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<string | null>(null);
   const aborted = useRef(false);
-
-  // Scroll-driven motion: pills surge horizontally with scroll velocity,
-  // then settle smoothly. Soft spring + capped range avoids the jolt that
-  // happens when the spring overshoots into the CSS marquee's own
-  // transform.
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 30,
-    stiffness: 180,
-    mass: 0.8,
-  });
-  const tickerX = useTransform(smoothVelocity, [-2000, 0, 2000], [60, 0, -60]);
 
   useEffect(() => {
     aborted.current = false;
@@ -319,12 +300,6 @@ export default function PriceTicker() {
             "linear-gradient(90deg, transparent, black 6%, black 94%, transparent)",
         }}
       >
-        {/* Scroll-velocity-driven outer wrapper. Both layers get
-            will-change so they sit on separate GPU layers and don't
-            invalidate each other's composite. */}
-        <motion.div
-          style={{ x: tickerX, willChange: "transform" }}
-        >
         <div
           className="flex gap-2.5 animate-marquee w-max"
           style={{ willChange: "transform", backfaceVisibility: "hidden" }}
@@ -372,7 +347,6 @@ export default function PriceTicker() {
             </div>
           ))}
         </div>
-        </motion.div>
       </div>
     </motion.div>
   );

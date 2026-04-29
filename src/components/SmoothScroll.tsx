@@ -9,6 +9,18 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   useEffect(() => {
+    // Skip Lenis on touch devices (native momentum is already great + Lenis
+    // adds a JS interpolation layer that feels laggy on phones) and when the
+    // user has prefers-reduced-motion set.
+    const isTouch =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(hover: none) and (pointer: coarse)").matches ||
+        "ontouchstart" in window);
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isTouch || reduceMotion) return;
+
     const lenis = new Lenis({
       // Snappier than the default — was 1.15s, now 0.7s. Combined with the
       // shorter scene budget in AppShowcase, one wheel notch advances the
