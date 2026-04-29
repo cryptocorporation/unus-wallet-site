@@ -16,17 +16,18 @@ export default function FinalCTA() {
         >
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-fg" />
-            {/* DeFi animation as a centered focal element (not full-bleed).
-                Sized to ~360px native width with a soft fade-out around it
-                so it reads as a glowing graphic, not a tiled background. */}
+            {/* DeFi animation as a centered focal element. Container matches
+                the asset's native 1836×1104 aspect (~1.66:1) so the whole
+                frame is visible without cropping; soft alpha fade at the
+                edges keeps it from looking like a hard rectangular sticker. */}
             <div
               aria-hidden
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[420px] aspect-square pointer-events-none"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[640px] pointer-events-none"
               style={{
                 maskImage:
-                  "radial-gradient(circle at center, black 35%, transparent 75%)",
+                  "linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%)",
                 WebkitMaskImage:
-                  "radial-gradient(circle at center, black 35%, transparent 75%)",
+                  "linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%)",
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -36,7 +37,7 @@ export default function FinalCTA() {
                 aria-hidden
                 loading="lazy"
                 decoding="async"
-                className="w-full h-full object-cover opacity-55 mix-blend-screen"
+                className="w-full h-auto opacity-55 mix-blend-screen"
               />
             </div>
             <div className="absolute inset-0 bg-grid opacity-15" />
