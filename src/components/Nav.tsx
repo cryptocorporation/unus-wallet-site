@@ -16,7 +16,6 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState<"EN" | "ES">("EN");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -60,33 +59,13 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center text-[12px] text-fg-muted">
-            <button
-              onClick={() => setLang("EN")}
-              className={cn(
-                "px-1.5 transition-colors",
-                lang === "EN" ? "text-fg font-semibold" : "hover:text-fg"
-              )}
-            >
-              EN
-            </button>
-            <span className="text-fg/30">/</span>
-            <button
-              onClick={() => setLang("ES")}
-              className={cn(
-                "px-1.5 transition-colors",
-                lang === "ES" ? "text-fg font-semibold" : "hover:text-fg"
-              )}
-            >
-              ES
-            </button>
-          </div>
-
           <a
-            href="#cta"
+            href="https://app.unuswallet.com"
+            target="_blank"
+            rel="noreferrer"
             className="hidden sm:inline-flex items-center gap-1.5 rounded-pill btn-brand px-5 py-2.5 text-[13.5px] font-medium"
           >
-            Get Started <Arrow className="size-4" />
+            Launch App <Arrow className="size-4" />
           </a>
           <button
             aria-label="Open menu"
@@ -118,10 +97,13 @@ export default function Nav() {
                 </a>
               ))}
               <a
-                href="#cta"
+                href="https://app.unuswallet.com"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
                 className="mt-2 inline-flex items-center gap-1.5 rounded-pill btn-brand px-5 py-2.5 text-sm font-medium justify-center"
               >
-                Get Started <Arrow className="size-4" />
+                Launch App <Arrow className="size-4" />
               </a>
             </div>
           </motion.div>

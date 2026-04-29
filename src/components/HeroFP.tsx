@@ -111,10 +111,12 @@ export default function HeroFP() {
           className="mt-9 flex flex-wrap items-center justify-center gap-3"
         >
           <a
-            href="#download"
+            href="https://app.unuswallet.com"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-pill btn-brand px-7 py-3.5 text-[14px] font-semibold"
           >
-            Get the app <Arrow className="size-4" />
+            Launch Web App <Arrow className="size-4" />
           </a>
           <a
             href="#features"
@@ -122,6 +124,18 @@ export default function HeroFP() {
           >
             See how it works
           </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.85, ease, delay: 0.4 }}
+          className="mt-5 inline-flex items-center gap-2 text-[12px] text-fg-muted"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1">
+            <span className="size-1.5 rounded-full bg-fg/40" />
+            iOS &amp; Android — Coming soon
+          </span>
         </motion.div>
       </div>
 
