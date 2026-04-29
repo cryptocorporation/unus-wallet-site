@@ -48,7 +48,8 @@ export default function Comparison() {
             }}
           />
 
-          <div className="rounded-card overflow-hidden border border-fg/10 shadow-[0_30px_80px_-30px_rgba(10,10,10,0.18)] bg-bg">
+          <div className="-mx-5 sm:mx-0 overflow-x-auto">
+          <div className="rounded-card overflow-hidden border border-fg/10 shadow-[0_30px_80px_-30px_rgba(10,10,10,0.18)] bg-bg min-w-[480px]">
             {/* Header */}
             <div className="grid grid-cols-[1.5fr_1fr_1.1fr] text-[9.5px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.2em] border-b border-fg/8">
               <div className="px-3 py-4 sm:px-6 sm:py-5 text-fg-dim font-semibold">Feature</div>
@@ -95,6 +96,7 @@ export default function Comparison() {
                 7 of 7 features lead
               </span>
             </div>
+          </div>
           </div>
         </motion.div>
       </div>

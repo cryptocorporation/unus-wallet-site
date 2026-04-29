@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -255,7 +255,7 @@ export default function PriceTicker() {
     };
   }, []);
 
-  const loop = [...tokens, ...tokens];
+  const loop = useMemo(() => [...tokens, ...tokens], [tokens]);
   const headerChange =
     marketChange !== null ? formatChange(marketChange) : null;
   const headerUp = (marketChange ?? 0) >= 0;

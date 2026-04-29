@@ -29,7 +29,7 @@ export default function FooterFP() {
   return (
     <footer className="relative border-t border-fg/8 bg-bg-2/40">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-14">
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
             <div className="flex items-center">
               <img

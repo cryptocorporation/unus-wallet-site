@@ -105,20 +105,20 @@ export default function AppShowcase() {
     <section
       ref={ref}
       className="relative"
-      // 75vh per scene — with 4 scenes the showcase is ~300vh total. Gives
-      // every scene (including the last one, Onchain trading) plenty of
-      // hold time before the section's sticky pin releases.
-      style={{ height: `${N * 75}vh` }}
+      // 75dvh per scene — with 4 scenes the showcase is ~300dvh total. Uses
+      // dvh (dynamic viewport height) so mobile browser chrome doesn't
+      // truncate the last scene when the address bar collapses.
+      style={{ height: `${N * 75}dvh` }}
     >
       <div
-        className="sticky top-0 h-screen overflow-hidden flex items-center"
+        className="sticky top-0 h-dvh overflow-hidden flex items-center"
         style={{ contain: "layout paint" }}
       >
         <Backdrop progress={scrollYProgress} />
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
           {/* Left — scrolling copy */}
-          <div className="lg:col-span-7 relative h-[68vh] sm:h-[72vh] flex items-center order-2 lg:order-1">
+          <div className="lg:col-span-7 relative min-h-[68dvh] sm:min-h-[72dvh] flex items-center order-2 lg:order-1">
             {scenes.map((s, i) => (
               <SceneCopy key={s.eyebrow} index={i} total={N} progress={scrollYProgress} {...s} />
             ))}

@@ -58,7 +58,7 @@ const items: Array<{
 export default function TrioCards() {
   return (
     <section className="relative py-12 lg:py-16">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8 grid md:grid-cols-3 gap-4">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         {items.map((it, i) => {
           const Icon = it.icon;
           return (

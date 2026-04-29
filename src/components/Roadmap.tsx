@@ -84,9 +84,9 @@ export default function Roadmap() {
       id="roadmap"
       ref={ref}
       className="relative"
-      style={{ height: `${phases.length * 100}vh` }}
+      style={{ height: `${phases.length * 100}dvh` }}
     >
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+      <div className="sticky top-0 h-dvh overflow-hidden flex flex-col">
         {/* Backdrop blobs */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] glow-brand blur-3xl opacity-40" />
@@ -109,7 +109,7 @@ export default function Roadmap() {
 
         {/* Horizontal track */}
         <div className="flex-1 flex items-center overflow-hidden">
-          <motion.div style={{ x }} className="flex gap-6 pl-[12vw] pr-[12vw] will-change-transform">
+          <motion.div style={{ x }} className="flex gap-4 sm:gap-6 pl-[5vw] pr-[5vw] sm:pl-[12vw] sm:pr-[12vw] will-change-transform">
             {phases.map((p, i) => (
               <PhaseCard
                 key={p.quarter}

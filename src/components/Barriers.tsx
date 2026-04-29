@@ -69,7 +69,7 @@ export default function Barriers() {
           subtitle="Traditional wallets force users to juggle bridges, gas tokens, and multiple accounts. This complexity creates friction, slows adoption, and limits what's possible in Web3."
         />
 
-        <div className="mt-16 grid md:grid-cols-3 gap-4">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4">
           {items.map((it, i) => {
             const Icon = it.icon;
             return (

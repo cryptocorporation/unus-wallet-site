@@ -129,7 +129,7 @@ export default function CoreFeatures() {
         </motion.div>
 
         {/* Grid */}
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {features.map((f, i) => {
             const Icon = f.icon;
             return (
