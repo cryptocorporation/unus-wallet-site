@@ -81,22 +81,12 @@ export default function HeroFP() {
       <div className="absolute inset-0 -z-10 bg-grid opacity-40" />
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
-          className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[12.5px] text-fg-muted"
-        >
-          <span className="size-1.5 rounded-full bg-positive animate-pulse" />
-          Self-custody · multi-chain · live
-        </motion.div>
-
         <motion.h1
           style={{ y: copyY, opacity: copyOpacity }}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease, delay: 0.05 }}
-          className="mt-7 font-display text-[clamp(2.6rem,7vw,5.6rem)] leading-[0.96] tracking-[-0.045em] font-extrabold text-fg"
+          className="font-display text-[clamp(2.6rem,7vw,5.6rem)] leading-[0.96] tracking-[-0.045em] font-extrabold text-fg"
         >
           One wallet.
           <br />
