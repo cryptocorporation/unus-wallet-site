@@ -48,15 +48,54 @@ export default function Comparison() {
             }}
           />
 
-          <div className="-mx-5 sm:mx-0 overflow-x-auto">
-          <div className="rounded-card overflow-hidden border border-fg/10 shadow-[0_30px_80px_-30px_rgba(10,10,10,0.18)] bg-bg min-w-[480px]">
+          {/* Mobile (<sm): per-feature stacked cards. The 3-column table
+              doesn't fit at 430px-class widths without horizontal scroll, so
+              on narrow phones we render one card per feature with a 2-column
+              comparison inside (Others vs. Unus). */}
+          <div className="sm:hidden space-y-2.5">
+            {rows.map((r, i) => (
+              <motion.div
+                key={r.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.04 }}
+                className="rounded-card border border-fg/10 bg-bg shadow-[0_8px_24px_-12px_rgba(10,10,10,0.08)] overflow-hidden"
+              >
+                <div className="px-4 pt-3.5 text-[13px] font-semibold text-fg">
+                  {r.label}
+                </div>
+                <div className="grid grid-cols-2 gap-1.5 p-3">
+                  <div className="rounded-lg border border-fg/8 bg-fg/[0.02] py-3 flex flex-col items-center gap-2">
+                    <span className="text-[9px] uppercase tracking-[0.18em] text-fg-dim font-semibold">
+                      Others
+                    </span>
+                    <Cell value={r.others} />
+                  </div>
+                  <div className="rounded-lg border-2 border-fg bg-fg/[0.05] py-3 flex flex-col items-center gap-2 relative">
+                    <span className="text-[9px] uppercase tracking-[0.18em] text-fg font-bold inline-flex items-center gap-1.5">
+                      <span className="size-1 rounded-full bg-positive" />
+                      Unus
+                    </span>
+                    <Cell value={r.unus} highlight />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+            <div className="text-[11px] text-fg-dim text-center pt-3">
+              ⏱ = Coming soon. See roadmap for dates.
+            </div>
+          </div>
+
+          {/* Tablet+ (≥sm): the original 3-column table */}
+          <div className="hidden sm:block rounded-card overflow-hidden border border-fg/10 shadow-[0_30px_80px_-30px_rgba(10,10,10,0.18)] bg-bg">
             {/* Header */}
-            <div className="grid grid-cols-[1.5fr_1fr_1.1fr] text-[9.5px] sm:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.2em] border-b border-fg/8">
-              <div className="px-3 py-4 sm:px-6 sm:py-5 text-fg-dim font-semibold">Feature</div>
-              <div className="px-3 py-4 sm:px-6 sm:py-5 text-center text-fg-dim font-semibold">
+            <div className="grid grid-cols-[1.5fr_1fr_1.1fr] text-[11px] uppercase tracking-[0.2em] border-b border-fg/8">
+              <div className="px-6 py-5 text-fg-dim font-semibold">Feature</div>
+              <div className="px-6 py-5 text-center text-fg-dim font-semibold">
                 Other Wallets
               </div>
-              <div className="px-3 py-4 sm:px-6 sm:py-5 text-center bg-fg text-bg font-bold relative">
+              <div className="px-6 py-5 text-center bg-fg text-bg font-bold relative">
                 <div className="inline-flex items-center gap-2">
                   <span className="size-1.5 rounded-full bg-positive" />
                   Unus Wallet
@@ -75,15 +114,15 @@ export default function Comparison() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className={`grid grid-cols-[1.5fr_1fr_1.1fr] items-center text-[12.5px] sm:text-[14.5px] ${
+                className={`grid grid-cols-[1.5fr_1fr_1.1fr] items-center text-[14.5px] ${
                   i % 2 ? "bg-fg/[0.02]" : ""
                 }`}
               >
-                <div className="px-3 py-4 sm:px-6 sm:py-5 text-fg font-medium">{r.label}</div>
-                <div className="px-3 py-4 sm:px-6 sm:py-5 text-center">
+                <div className="px-6 py-5 text-fg font-medium">{r.label}</div>
+                <div className="px-6 py-5 text-center">
                   <Cell value={r.others} />
                 </div>
-                <div className="px-3 py-4 sm:px-6 sm:py-5 text-center bg-fg/[0.05] border-l-2 border-fg">
+                <div className="px-6 py-5 text-center bg-fg/[0.05] border-l-2 border-fg">
                   <Cell value={r.unus} highlight />
                 </div>
               </motion.div>
@@ -91,12 +130,11 @@ export default function Comparison() {
 
             <div className="px-6 py-4 text-[11px] text-fg-dim border-t border-fg/8 flex items-center justify-between">
               <span>⏱ = Coming soon. See roadmap for dates.</span>
-              <span className="hidden sm:inline-flex items-center gap-1.5 text-fg-muted font-medium">
+              <span className="inline-flex items-center gap-1.5 text-fg-muted font-medium">
                 <span className="size-1.5 rounded-full bg-positive" />
                 7 of 7 features lead
               </span>
             </div>
-          </div>
           </div>
         </motion.div>
       </div>
