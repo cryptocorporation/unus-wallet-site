@@ -166,7 +166,7 @@ function PhoneArc({ parallax }: { parallax: MotionValue<number> }) {
   const cBRY = useTransform(parallax, [0, 1], [0, 60]);
 
   return (
-    <div className="relative mx-auto max-w-7xl h-[460px] sm:h-[540px] flex items-end justify-center">
+    <div className="relative mx-auto max-w-7xl h-[540px] sm:h-[600px] flex items-end justify-center">
       <div className="absolute inset-x-0 bottom-[-15%] h-[80%] glow-brand blur-3xl" />
 
       {/* Silver coins */}
