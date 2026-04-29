@@ -18,7 +18,7 @@ export default function FinalCTA() {
             <div className="absolute inset-0 bg-fg" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/DeFi.gif"
+              src="/assets/DeFi.webp"
               alt=""
               aria-hidden
               loading="lazy"
