@@ -16,6 +16,25 @@ export default function FinalCTA() {
         >
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-fg" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/DeFi.gif"
+              alt=""
+              aria-hidden
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen"
+            />
+            {/* Radial vignette so the headline + CTAs in the center stay
+                crisp against the moving GIF underneath. */}
+            <div
+              aria-hidden
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.78) 65%, rgba(10,10,10,0.92) 100%)",
+              }}
+            />
             <div className="absolute inset-0 bg-grid opacity-15" />
             <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-white/4 blur-3xl" />
           </div>
