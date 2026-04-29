@@ -16,25 +16,29 @@ export default function FinalCTA() {
         >
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-fg" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/DeFi.webp"
-              alt=""
-              aria-hidden
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen"
-            />
-            {/* Radial vignette so the headline + CTAs in the center stay
-                crisp against the moving GIF underneath. */}
+            {/* DeFi animation as a centered focal element (not full-bleed).
+                Sized to ~360px native width with a soft fade-out around it
+                so it reads as a glowing graphic, not a tiled background. */}
             <div
               aria-hidden
-              className="absolute inset-0"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] max-w-[420px] aspect-square pointer-events-none"
               style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.78) 65%, rgba(10,10,10,0.92) 100%)",
+                maskImage:
+                  "radial-gradient(circle at center, black 35%, transparent 75%)",
+                WebkitMaskImage:
+                  "radial-gradient(circle at center, black 35%, transparent 75%)",
               }}
-            />
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/DeFi.webp"
+                alt=""
+                aria-hidden
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover opacity-55 mix-blend-screen"
+              />
+            </div>
             <div className="absolute inset-0 bg-grid opacity-15" />
             <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-white/4 blur-3xl" />
           </div>
