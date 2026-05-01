@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -10,7 +10,7 @@ import {
   MotionValue,
 } from "framer-motion";
 
-type Scene = {
+export type Scene = {
   eyebrow: string;
   title: string;
   body: string;
@@ -19,7 +19,7 @@ type Scene = {
   image: string;
 };
 
-const scenes: Scene[] = [
+export const scenes: Scene[] = [
   {
     eyebrow: "Welcome",
     title: "Meet your new wallet.",
@@ -102,14 +102,16 @@ export default function AppShowcase() {
   const N = scenes.length;
 
   return (
-    <section
-      ref={ref}
-      className="relative"
-      // 75dvh per scene — with 4 scenes the showcase is ~300dvh total. Uses
-      // dvh (dynamic viewport height) so mobile browser chrome doesn't
-      // truncate the last scene when the address bar collapses.
-      style={{ height: `${N * 75}dvh` }}
-    >
+    <>
+      <MobileCarousel />
+      <section
+        ref={ref}
+        className="relative hidden lg:block"
+        // 75dvh per scene — with 4 scenes the showcase is ~300dvh total. Uses
+        // dvh (dynamic viewport height) so mobile browser chrome doesn't
+        // truncate the last scene when the address bar collapses.
+        style={{ height: `${N * 75}dvh` }}
+      >
       <div
         className="sticky top-0 h-dvh overflow-hidden flex items-center"
         style={{ contain: "layout paint" }}
@@ -134,6 +136,118 @@ export default function AppShowcase() {
             <PinnedPhone progress={scrollYProgress} total={N} />
           </div>
         </div>
+      </div>
+    </section>
+    </>
+  );
+}
+
+function MobileCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+
+  const onScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const idx = Math.round(el.scrollLeft / el.clientWidth);
+    if (idx !== active) setActive(idx);
+  };
+
+  const goTo = (i: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+  };
+
+  return (
+    <section className="lg:hidden relative py-16 overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-32 -left-32 size-[420px] rounded-full glow-mist blur-3xl opacity-50" />
+        <div className="absolute top-1/3 -right-32 size-[360px] rounded-full glow-brand blur-3xl opacity-40" />
+        <div className="absolute inset-0 bg-grid opacity-40" />
+      </div>
+
+      <div className="px-5 mb-6">
+        <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-fg-muted font-semibold">
+          <span className="size-1.5 rounded-full bg-fg" />
+          App tour
+        </div>
+        <h2 className="mt-3 font-display text-[clamp(1.7rem,7vw,2.2rem)] leading-[1.05] tracking-[-0.03em] font-extrabold text-fg">
+          One wallet. Every chain.
+        </h2>
+        <p className="mt-2 text-[14px] leading-relaxed text-fg-muted">
+          Swipe through the app — each screen, in your hand.
+        </p>
+      </div>
+
+      <div
+        ref={trackRef}
+        onScroll={onScroll}
+        className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth px-5 gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {scenes.map((s) => (
+          <article
+            key={s.eyebrow}
+            className="snap-center shrink-0 w-[calc(100vw-2.5rem)] max-w-[420px] rounded-2xl border border-fg/10 bg-bg overflow-hidden"
+          >
+            <div className="relative w-full aspect-[112/100] bg-bg-2">
+              <Image
+                src={s.image}
+                alt={s.title}
+                fill
+                sizes="(max-width: 480px) 90vw, 420px"
+                className="object-contain"
+              />
+            </div>
+            <div className="p-5 space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1 text-[10.5px] uppercase tracking-[0.22em] text-fg-muted font-semibold">
+                <span className="size-1.5 rounded-full bg-fg" />
+                {s.eyebrow}
+              </div>
+              <h3 className="font-display text-[1.4rem] leading-tight tracking-tight font-extrabold text-fg">
+                {s.title}
+              </h3>
+              <p className="text-[13.5px] leading-relaxed text-fg-muted">
+                {s.body}
+              </p>
+              <ul className="space-y-2 pt-1">
+                {s.bullets.map((b) => (
+                  <li
+                    key={b}
+                    className="flex items-start gap-2.5 text-[13px] leading-snug text-fg-muted"
+                  >
+                    <span className="mt-1.5 size-1.5 rounded-full bg-fg shrink-0" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+              {s.stat && (
+                <div className="mt-2 inline-flex items-baseline gap-3 rounded-card border border-fg/10 bg-bg/70 px-3.5 py-2">
+                  <span className="font-display font-extrabold text-fg text-[1.25rem] tracking-tight leading-none">
+                    {s.stat.value}
+                  </span>
+                  <span className="text-[10.5px] uppercase tracking-[0.2em] text-fg-dim font-semibold">
+                    {s.stat.label}
+                  </span>
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-5 flex items-center justify-center gap-2">
+        {scenes.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all ${
+              i === active ? "w-8 bg-fg" : "w-1.5 bg-fg/30"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );
