@@ -33,12 +33,6 @@ export default function Upcoming() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mt-16 relative rounded-card overflow-hidden glass-strong border border-fg/10"
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute -top-32 -left-20 w-[500px] h-[500px] rounded-full bg-[#0a0a0a]/30 blur-3xl" />
-            <div className="absolute -bottom-32 -right-20 w-[500px] h-[500px] rounded-full bg-fg/20 blur-3xl" />
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             <div className="p-6 sm:p-10 lg:p-14">
               <div className="inline-flex items-center gap-2 rounded-pill bg-[#0a0a0a]/15 border border-[#0a0a0a]/30 text-[#0a0a0a] px-3 py-1 text-[11px] uppercase tracking-[0.2em]">
