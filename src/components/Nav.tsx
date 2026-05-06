@@ -24,6 +24,17 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu on Escape so users have a keyboard escape hatch
+  // beyond tapping the same hamburger again.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <motion.header
       initial={{ y: -32, opacity: 0 }}
@@ -68,22 +79,62 @@ export default function Nav() {
             Launch App <Arrow className="size-4" />
           </a>
           <button
-            aria-label="Open menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             className="lg:hidden size-10 rounded-full glass grid place-items-center"
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="relative block w-4 h-0.5 bg-fg before:content-[''] before:absolute before:left-0 before:-top-1.5 before:w-4 before:h-0.5 before:bg-fg after:content-[''] after:absolute after:left-0 after:top-1.5 after:w-4 after:h-0.5 after:bg-fg" />
+            <span className="relative block w-4 h-4">
+              <span
+                className={cn(
+                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-200",
+                  open ? "top-[7px] rotate-45" : "top-[2px]"
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 top-[7px] w-4 h-0.5 bg-fg transition-opacity duration-150",
+                  open ? "opacity-0" : "opacity-100"
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-200",
+                  open ? "top-[7px] -rotate-45" : "top-[12px]"
+                )}
+              />
+            </span>
           </button>
         </div>
       </div>
 
+      {/* Tap-outside-to-close scrim — rendered before the panel so the panel
+          paints on top in normal stacking order (no z-index needed). lg:hidden
+          so desktop is unaffected. */}
+      <AnimatePresence>
+        {open && (
+          <motion.button
+            key="scrim"
+            type="button"
+            aria-label="Close menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setOpen(false)}
+            className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-fg/20 backdrop-blur-sm cursor-default"
+          />
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {open && (
           <motion.div
+            key="panel"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden border-t border-fg/5 bg-white/95 backdrop-blur-xl"
+            className="lg:hidden relative overflow-hidden border-t border-fg/5 bg-white/95 backdrop-blur-xl"
           >
             <div className="px-5 py-4 flex flex-col gap-1">
               {links.map((l) => (
