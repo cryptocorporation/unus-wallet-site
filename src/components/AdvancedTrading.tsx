@@ -15,14 +15,14 @@ const cards = [
   {
     icon: Bolt,
     title: "Tokenized Stocks",
-    body: "Access global stock markets on-chain. Buy and sell tokenized shares of Apple, Tesla, Amazon — all from your crypto wallet.",
+    body: "Access global stock markets on-chain. Buy and sell tokenized shares of Apple, Tesla, Amazon, all from your crypto wallet.",
     color: "#d4d4d4",
     visual: "stocks",
   },
   {
     icon: Lock,
     title: "Private Swaps",
-    body: "Protect your privacy with one-tap incognito swaps. No sign-ups, no tracking — seamless cross-chain swaps with full anonymity.",
+    body: "Protect your privacy with one-tap incognito swaps. No sign-ups, no tracking. Seamless cross-chain swaps with full anonymity.",
     color: "#ebebeb",
     visual: "private",
   },

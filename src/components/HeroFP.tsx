@@ -100,7 +100,7 @@ export default function HeroFP() {
           transition={{ duration: 0.85, ease, delay: 0.15 }}
           className="mt-6 max-w-2xl mx-auto text-[16px] leading-relaxed text-fg-muted"
         >
-          Hold, swap, trade and explore — across every chain — from a single
+          Hold, swap, trade and explore across every chain, from a single
           self-custody wallet. Built for clarity. Designed for speed.
         </motion.p>
 
@@ -134,7 +134,7 @@ export default function HeroFP() {
         >
           <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1">
             <span className="size-1.5 rounded-full bg-fg/40" />
-            iOS &amp; Android — Coming soon
+            iOS &amp; Android · Coming soon
           </span>
         </motion.div>
       </div>

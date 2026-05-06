@@ -104,7 +104,7 @@ export default function CoreFeatures() {
           eyebrow="Core feature highlights"
           title={
             <>
-              Unlock Web3 with simple, scalable tools —{" "}
+              Unlock Web3 with simple, scalable tools,{" "}
               <span className="text-gradient">guided by our smart agent.</span>
             </>
           }

@@ -98,15 +98,15 @@ const PAIRS: Array<{
 const FALLBACK: Token[] = PAIRS.map((p) => ({
   symbol: p.symbol,
   name: p.name,
-  price: "—",
-  change: "—",
+  price: "-",
+  change: "-",
   up: true,
   color: p.color,
   logo: p.logo,
 }));
 
 function formatPrice(value: number): string {
-  if (!isFinite(value)) return "—";
+  if (!isFinite(value)) return "-";
   if (value >= 1000)
     return `$${value.toLocaleString("en-US", {
       maximumFractionDigits: 2,
@@ -118,7 +118,7 @@ function formatPrice(value: number): string {
 }
 
 function formatChange(value: number): string {
-  if (!isFinite(value)) return "—";
+  if (!isFinite(value)) return "-";
   const sign = value >= 0 ? "+" : "";
   return `${sign}${value.toFixed(2)}%`;
 }
@@ -178,8 +178,8 @@ export default function PriceTicker() {
             return {
               symbol: p.symbol,
               name: p.name,
-              price: "—",
-              change: "—",
+              price: "-",
+              change: "-",
               up: true,
               color: p.color,
               logo: p.logo,
@@ -334,7 +334,7 @@ export default function PriceTicker() {
                   className="text-[11px] font-semibold tabular-nums"
                   style={{
                     color:
-                      t.change === "—"
+                      t.change === "-"
                         ? "var(--color-fg-dim)"
                         : t.up
                           ? "#16a34a"

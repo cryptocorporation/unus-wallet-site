@@ -25,7 +25,7 @@ export const scenes: Scene[] = [
     title: "Meet your new wallet.",
     body: "One self-custody wallet for every chain you use. Hold, swap, trade and track your portfolio without juggling bridges, gas tokens or accounts.",
     bullets: [
-      "Self-custody by default — keys live on your device",
+      "Self-custody by default. Keys live on your device",
       "Built around a single, calm dashboard",
       "Designed for clarity, built for speed",
     ],
@@ -34,7 +34,7 @@ export const scenes: Scene[] = [
   {
     eyebrow: "01 · Multi-chain dashboard",
     title: "All your assets. One clean view.",
-    body: "ETH on Mainnet, BONK on Solana, FRAX on Arbitrum — every token and NFT, balanced and tracked side by side. Receive, send, swap or trade in a tap.",
+    body: "ETH on Mainnet, BONK on Solana, FRAX on Arbitrum: every token and NFT, balanced and tracked side by side. Receive, send, swap or trade in a tap.",
     bullets: [
       "Native + ERC-20 tokens unified into one balance",
       "Real-time prices and 24h PnL per asset",
@@ -46,7 +46,7 @@ export const scenes: Scene[] = [
   {
     eyebrow: "02 · Cross-chain swaps",
     title: "Swap and bridge in one tap.",
-    body: "Move value across chains without juggling bridges. The router picks the best route — slippage, gas and ETA are shown up front.",
+    body: "Move value across chains without juggling bridges. The router picks the best route. Slippage, gas and ETA are shown up front.",
     bullets: [
       "Optimal route auto-selected per swap",
       "Slippage, gas estimate and ETA before you sign",
@@ -61,7 +61,7 @@ export const scenes: Scene[] = [
     bullets: [
       "Real candle charts · 1H / 1D / 1W / 1M / YTD",
       "Long and short the same asset from one screen",
-      "Self-custody throughout — no exchange deposit",
+      "Self-custody throughout, no exchange deposit",
     ],
     stat: { value: "Long & short", label: "self-custody throughout" },
     image: "/assets/trans/3.png",
@@ -176,7 +176,7 @@ function MobileCarousel() {
           One wallet. Every chain.
         </h2>
         <p className="mt-2 text-[14px] leading-relaxed text-fg-muted">
-          Swipe through the app — each screen, in your hand.
+          Swipe through the app. Each screen, in your hand.
         </p>
       </div>
 

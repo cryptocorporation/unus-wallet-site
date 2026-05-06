@@ -28,7 +28,7 @@ export default function Comparison() {
               <span className="text-gradient">outperforms.</span>
             </>
           }
-          subtitle="Simpler workflows and unified cross-chain access — without the friction of traditional Web3 wallets."
+          subtitle="Simpler workflows and unified cross-chain access, without the friction of traditional Web3 wallets."
         />
 
         <motion.div

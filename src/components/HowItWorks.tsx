@@ -14,7 +14,7 @@ const steps = [
   {
     n: "01",
     title: "User Intent",
-    body: "You simply choose what you want to do — no complex steps required.",
+    body: "You simply choose what you want to do. No complex steps required.",
   },
   {
     n: "02",

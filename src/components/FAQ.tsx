@@ -8,15 +8,15 @@ import { Plus } from "./icons";
 const items = [
   {
     q: "What makes Unus different from other wallets?",
-    a: "Unus combines an omnichain messaging layer with an AI smart agent. You describe what you want — swap, stake, lend, snipe — and the agent picks the best path, abstracts gas, and executes across chains automatically. No bridges, no copying contract addresses, no juggling wallets.",
+    a: "Unus combines an omnichain messaging layer with an AI smart agent. You describe what you want (swap, stake, lend, snipe) and the agent picks the best path, abstracts gas, and executes across chains automatically. No bridges, no copying contract addresses, no juggling wallets.",
   },
   {
     q: "How does the smart agent work?",
-    a: "The agent reads your intent, scans liquidity and pricing across supported chains, weighs gas, slippage, MEV risk and execution time, then proposes the optimal route. You approve, and Unus Wallet v2's omnichain infrastructure carries it out — usually in seconds.",
+    a: "The agent reads your intent, scans liquidity and pricing across supported chains, weighs gas, slippage, MEV risk and execution time, then proposes the optimal route. You approve, and Unus Wallet v2's omnichain infrastructure carries it out, usually in seconds.",
   },
   {
     q: "Is Unus non-custodial?",
-    a: "Yes — 100% non-custodial. Your keys never leave your device. Unus uses account abstraction so the UX feels effortless, but you remain in full control of your assets at all times.",
+    a: "Yes. 100% non-custodial. Your keys never leave your device. Unus uses account abstraction so the UX feels effortless, but you remain in full control of your assets at all times.",
   },
   {
     q: "When will the sniper bot launch?",

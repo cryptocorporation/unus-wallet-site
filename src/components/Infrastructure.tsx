@@ -74,7 +74,7 @@ export default function Infrastructure() {
               <span className="text-gradient">Unus Wallet v2.</span>
             </>
           }
-          subtitle="Advanced tech stack — omnichain messaging, AI optimization, gas abstraction, and account abstraction — working in concert."
+          subtitle="Advanced tech stack: omnichain messaging, AI optimization, gas abstraction, and account abstraction, working in concert."
         />
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

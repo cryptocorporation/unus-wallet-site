@@ -44,7 +44,7 @@ export default function Upcoming() {
               <p className="mt-4 text-[14.5px] text-fg-muted leading-relaxed max-w-md">
                 The world's first mobile multi-chain sniper bot for token
                 launches. Execute on opportunities the moment they hit any
-                chain — with risk controls and MEV protection built in.
+                chain, with risk controls and MEV protection built in.
               </p>
               <ul className="mt-8 space-y-3">
                 {features.map((f) => (
