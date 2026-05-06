@@ -73,7 +73,7 @@ export default function Upcoming() {
 
 function SniperVisual() {
   return (
-    <div className="relative w-full max-w-[220px] sm:max-w-[280px] lg:max-w-[340px] aspect-square">
+    <div className="relative w-full max-w-[220px] sm:max-w-[260px] lg:max-w-[260px] aspect-square">
       {/* Expanding ring waves — radar pulses out from the center */}
       {[0, 1, 2].map((i) => (
         <motion.div
