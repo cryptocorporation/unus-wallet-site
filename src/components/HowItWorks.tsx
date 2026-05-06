@@ -47,7 +47,7 @@ export default function HowItWorks() {
   const headLeft = useTransform(lineProgress, (v) => `${v * 100}%`);
 
   return (
-    <section id="how" ref={ref} className="relative py-14 lg:py-32">
+    <section id="how" ref={ref} className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="How it works"

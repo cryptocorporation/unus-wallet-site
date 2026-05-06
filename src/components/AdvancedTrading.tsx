@@ -30,7 +30,7 @@ const cards = [
 
 export default function AdvancedTrading() {
   return (
-    <section id="highlights" className="relative py-14 lg:py-32 overflow-hidden">
+    <section id="highlights" className="relative py-14 lg:py-20 overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] glow-brand blur-3xl opacity-30" />
       </div>

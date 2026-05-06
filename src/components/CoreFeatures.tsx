@@ -97,7 +97,7 @@ const features = [
 
 export default function CoreFeatures() {
   return (
-    <section id="features" className="relative py-14 lg:py-32">
+    <section id="features" className="relative py-14 lg:py-20">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-fg/10 to-transparent" />
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader

@@ -54,7 +54,7 @@ const items: Array<{
 
 export default function Barriers() {
   return (
-    <section className="relative py-14 lg:py-32">
+    <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="The problem"

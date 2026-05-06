@@ -32,7 +32,7 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative py-14 lg:py-32">
+    <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="FAQ"
