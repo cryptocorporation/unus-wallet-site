@@ -36,7 +36,7 @@ export default function Comparison() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7 }}
-          className="mt-14 rounded-card overflow-visible relative"
+          className="mt-14 rounded-card overflow-visible relative isolate"
         >
           {/* Spotlight glow behind the Unus column to draw the eye there */}
           <div
@@ -101,7 +101,7 @@ export default function Comparison() {
                   Unus Wallet
                 </div>
                 {/* "Winner" ribbon */}
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-pill bg-positive text-white px-2.5 py-0.5 text-[9px] uppercase tracking-[0.18em] font-bold shadow-[0_8px_18px_-6px_rgba(22,163,74,0.6)]">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-pill bg-positive text-white px-2.5 py-0.5 text-[9px] uppercase tracking-[0.18em] font-bold shadow-[0_8px_18px_-6px_rgba(22,163,74,0.6)] whitespace-nowrap">
                   ★ Winner
                 </span>
               </div>
