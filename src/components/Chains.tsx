@@ -30,7 +30,7 @@ export default function Chains() {
   const loop = [...live, ...live];
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
+    <section ref={ref} className="relative py-14 lg:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="Supported chains"

@@ -13,7 +13,7 @@ const features = [
 
 export default function Upcoming() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-14 lg:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="Coming soon"

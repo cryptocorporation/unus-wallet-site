@@ -64,7 +64,7 @@ const components: Array<{
 
 export default function Infrastructure() {
   return (
-    <section className="relative py-24 lg:py-32">
+    <section className="relative py-14 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
           eyebrow="Infrastructure"

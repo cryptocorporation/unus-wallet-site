@@ -157,7 +157,7 @@ function MobileRoadmap() {
   };
 
   return (
-    <section className="lg:hidden relative py-20 overflow-hidden">
+    <section className="lg:hidden relative py-14 overflow-hidden">
       {/* Backdrop blobs (toned down vs desktop — less GPU work on phones) */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 left-1/4 w-[400px] h-[400px] glow-brand blur-3xl opacity-30" />

@@ -160,7 +160,7 @@ function MobileCarousel() {
   };
 
   return (
-    <section className="lg:hidden relative py-16 overflow-hidden">
+    <section className="lg:hidden relative py-12 overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-32 -left-32 size-[420px] rounded-full glow-mist blur-3xl opacity-50" />
         <div className="absolute top-1/3 -right-32 size-[360px] rounded-full glow-brand blur-3xl opacity-40" />
