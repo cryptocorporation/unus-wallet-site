@@ -185,11 +185,14 @@ function PhaseCard({
         />
       )}
 
-      {/* "Live now" pulse ring on the current card */}
+      {/* "Live now" pulse ring on the current card.
+          Hidden on mobile — the green "Current · MVP Launch" label below
+          already conveys live status, and the absolute pill collided with
+          the counter on narrow cards. */}
       {isCurrent && (
         <>
-          <div className="absolute -top-3 -right-3 size-20 rounded-full bg-positive/20 blur-2xl" />
-          <span className="absolute top-6 right-6 inline-flex items-center gap-1.5 rounded-pill bg-positive text-white px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] font-bold">
+          <div className="hidden sm:block absolute -top-3 -right-3 size-20 rounded-full bg-positive/20 blur-2xl" />
+          <span className="hidden sm:inline-flex absolute top-6 right-6 items-center gap-1.5 rounded-pill bg-positive text-white px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] font-bold">
             <span className="relative flex size-1.5">
               <span className="absolute inline-flex size-1.5 rounded-full bg-white opacity-70 animate-ping" />
               <span className="relative inline-flex size-1.5 rounded-full bg-white" />
