@@ -87,7 +87,7 @@ export default function Nav() {
             <span className="relative block w-4 h-4">
               <span
                 className={cn(
-                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-200",
+                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-150",
                   open ? "top-[7px] rotate-45" : "top-[2px]"
                 )}
               />
@@ -99,7 +99,7 @@ export default function Nav() {
               />
               <span
                 className={cn(
-                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-200",
+                  "absolute left-0 w-4 h-0.5 bg-fg origin-center transition-all duration-150",
                   open ? "top-[7px] -rotate-45" : "top-[12px]"
                 )}
               />
@@ -120,7 +120,7 @@ export default function Nav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.15 }}
             onClick={() => setOpen(false)}
             className="lg:hidden fixed inset-x-0 top-16 bottom-0 bg-fg/20 backdrop-blur-sm cursor-default"
           />
@@ -134,6 +134,10 @@ export default function Nav() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            // Framer's default tween for height: "auto" runs ~350ms which
+            // feels noticeably laggy on mobile taps. Cap at 0.16s with a
+            // sharp ease-out so the panel reads as instant.
+            transition={{ duration: 0.16, ease: "easeOut" }}
             className="lg:hidden relative overflow-hidden border-t border-fg/5 bg-white/95 backdrop-blur-xl"
           >
             <div className="px-5 py-4 flex flex-col gap-1">
