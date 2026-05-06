@@ -9,7 +9,6 @@ type Phase = {
   quarter: string;
   label: string;
   status: "current" | "next" | "later";
-  accent: string;
   items: string[];
 };
 
@@ -18,7 +17,6 @@ const phases: Phase[] = [
     quarter: "Q2 2026",
     label: "Current · MVP Launch",
     status: "current",
-    accent: "#0a0a0a",
     items: [
       "Core wallet functionality",
       "Cross-chain swaps",
@@ -32,7 +30,6 @@ const phases: Phase[] = [
     quarter: "Q3 2026",
     label: "Enhanced Features",
     status: "next",
-    accent: "#d4d4d4",
     items: [
       "Lending feature launch",
       "Mobile app release",
@@ -46,7 +43,6 @@ const phases: Phase[] = [
     quarter: "Q4 2026",
     label: "Advanced Infrastructure",
     status: "later",
-    accent: "#2a2a2a",
     items: [
       "zkSync integration",
       "Cosmos compatibility",
@@ -58,7 +54,6 @@ const phases: Phase[] = [
     quarter: "Q1 2027",
     label: "Revolutionary Features",
     status: "later",
-    accent: "#0a0a0a",
     items: [
       "Multi-chain sniper bot launch",
       "Advanced trading algorithms",
@@ -312,14 +307,6 @@ function PhaseCardBody({
     <div
       className={`rounded-card p-6 sm:p-8 md:p-10 relative overflow-hidden ${cardClass}`}
     >
-      {/* Decorative blob (skip on current — it's already solid) */}
-      {!isCurrent && (
-        <div
-          className="absolute -top-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-30"
-          style={{ background: phase.accent }}
-        />
-      )}
-
       {/* "Live now" pulse ring on the current card.
           Hidden on mobile — the green "Current · MVP Launch" label below
           already conveys live status, and the absolute pill collided with
