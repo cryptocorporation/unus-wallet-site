@@ -84,9 +84,13 @@ export default function Roadmap() {
       id="roadmap"
       ref={ref}
       className="relative"
-      style={{ height: `${phases.length * 100}dvh` }}
+      // svh, not dvh — dvh recalculates as iOS Safari's URL bar collapses,
+      // which made every section below this one (Sniper Bot, Infrastructure,
+      // …) jump up and down by ~50px while scrolling. svh locks the height
+      // to the smallest viewport so the page layout stays stable.
+      style={{ height: `${phases.length * 100}svh` }}
     >
-      <div className="sticky top-0 h-dvh overflow-hidden flex flex-col">
+      <div className="sticky top-0 h-svh overflow-hidden flex flex-col">
         {/* Backdrop blobs */}
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] glow-brand blur-3xl opacity-40" />
