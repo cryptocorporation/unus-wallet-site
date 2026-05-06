@@ -206,7 +206,7 @@ function SniperVisual() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="absolute top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-pill bg-bg border border-fg/12 px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-fg-muted font-semibold"
+        className="absolute top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-pill bg-bg border border-fg/12 px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-fg-muted font-semibold whitespace-nowrap"
       >
         <span className="size-1.5 rounded-full bg-positive animate-pulse" />
         Scanning
@@ -218,7 +218,7 @@ function SniperVisual() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.8, duration: 0.6 }}
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 rounded-pill bg-fg text-bg px-3 py-1 text-[10px] uppercase tracking-[0.22em] font-semibold"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 rounded-pill bg-fg text-bg px-3 py-1 text-[10px] uppercase tracking-[0.22em] font-semibold whitespace-nowrap"
       >
         <span>4 launches</span>
         <span className="size-1 rounded-full bg-bg/50" />
