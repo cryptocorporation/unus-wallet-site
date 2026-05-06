@@ -305,7 +305,11 @@ function PhaseCardBody({
 
   return (
     <div
-      className={`rounded-card p-6 sm:p-8 md:p-10 relative overflow-hidden ${cardClass}`}
+      // h-full so each card fills its slide wrapper on mobile — the flex track
+      // stretches all wrappers to the tallest, but without h-full the card
+      // surface stops at its content height, leaving Q4 and Q1 2027 visibly
+      // shorter than Q2/Q3 (4 items vs 6).
+      className={`rounded-card p-6 sm:p-8 md:p-10 relative overflow-hidden h-full ${cardClass}`}
     >
       {/* "Live now" pulse ring on the current card.
           Hidden on mobile — the green "Current · MVP Launch" label below
