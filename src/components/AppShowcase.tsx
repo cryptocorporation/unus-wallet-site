@@ -6,7 +6,7 @@ import {
   motion,
   useScroll,
   useTransform,
-  cubicBezier,
+  useSpring,
   MotionValue,
 } from "framer-motion";
 
@@ -68,80 +68,261 @@ export const scenes: Scene[] = [
   },
 ];
 
-// 4-stop offset window for scene i of n scenes.
-// `entry`/`exit` widen the fade band; smaller numbers = punchier swap with
-// more hold time per scene.
-//
-// Last scene gets a hard pin to progress=1.0 — no fade-out. Otherwise the
-// final scene briefly fades to nothing right at the section's tail and the
-// next section starts taking over before the scene was readable.
-function stops(i: number, n: number): [number, number, number, number] {
-  const start = i / n;
-  const end = (i + 1) / n;
-  const isLast = i === n - 1;
-  const eps = 1e-3;
-  const entry = 0.018;
-  const exit = isLast ? 0 : 0.018;
-  const a = Math.max(0, start - entry);
-  const b = Math.min(1, Math.max(a + eps, start + entry));
-  const c = isLast ? 1 : Math.min(1, Math.max(b + eps, end - exit));
-  const d = isLast ? 1 : Math.min(1, Math.max(c + eps, end + exit));
-  return [a, b, c, d];
+const N = scenes.length;
+
+// WAAPI requires offsets in [0, 1] and monotonically non-decreasing. clamp01
+// + sortedClamp keep every useTransform input safe regardless of how the
+// per-scene segment math falls out.
+const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
+const sortedClamp = (arr: number[]) => {
+  const out = arr.map(clamp01);
+  for (let i = 1; i < out.length; i++) {
+    if (out[i] < out[i - 1]) out[i] = out[i - 1];
+  }
+  return out;
+};
+
+// Compute the 4 progress stops for a scene's opacity curve.
+// Crossfades centered exactly on the boundary cause both adjacent scenes
+// to sit at 50% opacity at p=segEnd — two giant headlines stack and become
+// illegible. To avoid that, the fade-OUT of scene i finishes a hair before
+// the boundary (PRE_GAP) while the fade-IN of scene i+1 starts AT the
+// boundary. The micro-gap reads as a clean swap rather than a smear.
+const FADE_IN = 0.022;
+const FADE_OUT = 0.018;
+const PRE_GAP = 0.006;
+function sceneOpacityStops(index: number) {
+  const isFirst = index === 0;
+  const isLast = index === N - 1;
+  const segStart = index / N;
+  const segEnd = (index + 1) / N;
+  return {
+    offsets: sortedClamp([
+      isFirst ? 0 : segStart,
+      isFirst ? 0 : segStart + FADE_IN,
+      isLast ? 1 : segEnd - PRE_GAP - FADE_OUT,
+      isLast ? 1 : segEnd - PRE_GAP,
+    ]),
+    values: [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0] as [
+      number,
+      number,
+      number,
+      number,
+    ],
+  };
 }
 
-// useTransform's `ease` option requires a function, not a bezier tuple.
-const screenEase = cubicBezier(0.22, 1, 0.36, 1);
-
 export default function AppShowcase() {
+  return (
+    <>
+      <MobileCarousel />
+      <DesktopTypeTakeover />
+    </>
+  );
+}
+
+/* ============================================================
+   Desktop · Type Takeover
+   Single pinned section spans N*100svh. One shared scroll
+   progress drives all three layers (headline, phone, body)
+   so transitions stay continuous instead of restarting per
+   scene. Sharp 0.025 fade windows so only one scene at a time.
+   ============================================================ */
+function DesktopTypeTakeover() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
-
-  const N = scenes.length;
+  // Snappier spring than the default — keeps progress close to actual
+  // scroll position so motion never feels like it's lagging behind.
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 26,
+    mass: 0.3,
+  });
 
   return (
-    <>
-      <MobileCarousel />
-      <section
-        ref={ref}
-        className="relative hidden lg:block"
-        // 75dvh per scene — with 4 scenes the showcase is ~300dvh total. Uses
-        // dvh (dynamic viewport height) so mobile browser chrome doesn't
-        // truncate the last scene when the address bar collapses.
-        style={{ height: `${N * 75}dvh` }}
-      >
+    <section
+      ref={ref}
+      className="relative hidden lg:block"
+      // 60svh per scene (was 100svh): each scroll viewport advances ~1.6
+      // scenes instead of 1, so the section never feels "stuck" between
+      // headline transitions.
+      style={{ height: `${N * 60}svh` }}
+    >
       <div
-        className="sticky top-0 h-dvh overflow-hidden flex items-center"
-        style={{ contain: "layout paint" }}
+        className="sticky top-0 h-svh overflow-hidden bg-bg"
+        style={{ perspective: "1400px" }}
       >
-        <Backdrop progress={scrollYProgress} />
+        {/* Phone pinned right with parallax + idle float */}
+        <PhoneStage progress={smooth} />
 
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 w-full grid lg:grid-cols-12 gap-10 items-center">
-          {/* Left — scrolling copy */}
-          <div className="lg:col-span-7 relative min-h-[68dvh] sm:min-h-[72dvh] flex items-center order-2 lg:order-1">
+        {/* Giant headline left, sized to leave room for the phone */}
+        <div className="absolute inset-0 flex items-center pointer-events-none">
+          <div className="relative w-full lg:w-[55%] pl-[6vw] lg:pl-[8vw] pr-[6vw]">
             {scenes.map((s, i) => (
-              <SceneCopy key={s.eyebrow} index={i} total={N} progress={scrollYProgress} {...s} />
+              <HeadlineLayer key={s.eyebrow} scene={s} index={i} progress={smooth} />
             ))}
-            <SceneIndicator
-              progress={scrollYProgress}
-              total={N}
-              scenes={scenes}
-            />
           </div>
+        </div>
 
-          {/* Right — pinned phone with morphing screens */}
-          <div className="lg:col-span-5 relative order-1 lg:order-2 grid place-items-center">
-            <PinnedPhone progress={scrollYProgress} total={N} />
-          </div>
+        {/* Eyebrow + body bottom-left, staggered slide-in */}
+        <div className="absolute bottom-[6vh] left-[6vw] right-[6vw] lg:left-[8vw] lg:right-[42%] max-w-[520px]">
+          {scenes.map((s, i) => (
+            <CopyLayer key={s.eyebrow} scene={s} index={i} progress={smooth} />
+          ))}
         </div>
       </div>
     </section>
-    </>
   );
 }
 
+function PhoneStage({ progress }: { progress: MotionValue<number> }) {
+  // Bigger parallax range so the phone visibly drifts as you scroll within
+  // any single scene — eliminates the "scroll did nothing" feeling.
+  const parallaxY = useTransform(progress, [0, 1], [80, -80]);
+  const rotateY = useTransform(progress, [0, 0.5, 1], [-6, 0, 6]);
+  return (
+    <motion.div
+      style={{ y: parallaxY, rotateY, transformStyle: "preserve-3d" }}
+      className="absolute top-1/2 right-[4vw] -translate-y-1/2 w-[clamp(280px,32vw,460px)] aspect-[6720/6000]"
+    >
+      <motion.div
+        animate={{ y: [-6, 6, -6] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0"
+      >
+        {scenes.map((s, i) => (
+          <PhoneScreen key={s.image} scene={s} index={i} progress={progress} />
+        ))}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function PhoneScreen({
+  scene,
+  index,
+  progress,
+}: {
+  scene: Scene;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const { offsets, values } = sceneOpacityStops(index);
+  const opacity = useTransform(progress, offsets, values);
+  const y = useTransform(progress, offsets, [40, 0, 0, -40]);
+  const scale = useTransform(progress, offsets, [0.92, 1, 1, 0.92]);
+  return (
+    <motion.div style={{ opacity, y, scale }} className="absolute inset-0">
+      <Image
+        src={scene.image}
+        alt={scene.title}
+        fill
+        className="object-contain select-none"
+        sizes="(max-width: 1024px) 100vw, 460px"
+        priority={index === 0}
+        draggable={false}
+      />
+    </motion.div>
+  );
+}
+
+function HeadlineLayer({
+  scene,
+  index,
+  progress,
+}: {
+  scene: Scene;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const { offsets, values } = sceneOpacityStops(index);
+  const opacity = useTransform(progress, offsets, values);
+  const y = useTransform(progress, offsets, [24, 0, 0, -24]);
+  return (
+    <motion.h2
+      style={{ opacity, y }}
+      className="absolute inset-0 flex items-center font-display font-extrabold tracking-[-0.035em] leading-[0.95] text-fg"
+    >
+      <span className="text-[clamp(2.4rem,8.5vw,7.5rem)] block">
+        {scene.title}
+      </span>
+    </motion.h2>
+  );
+}
+
+function CopyLayer({
+  scene,
+  index,
+  progress,
+}: {
+  scene: Scene;
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const isFirst = index === 0;
+  const isLast = index === N - 1;
+  const segStart = index / N;
+  const segEnd = (index + 1) / N;
+  const stagger = 0.018;
+
+  // Eyebrow uses the same opacity stops as the headline so all elements
+  // disappear and reappear together at the boundary — no straggler stays
+  // on screen during a swap.
+  const eyebrow = sceneOpacityStops(index);
+  const eyebrowOpacity = useTransform(
+    progress,
+    eyebrow.offsets,
+    eyebrow.values
+  );
+  const eyebrowX = useTransform(progress, eyebrow.offsets, [-32, 0, 0, -16]);
+
+  // Body slides in slightly later than headline+eyebrow (stagger). Its
+  // fade-out stops at the same pre-gap point as the rest of the scene.
+  const bodyOffsets = sortedClamp([
+    isFirst ? 0 : segStart + stagger,
+    isFirst ? 0 : segStart + FADE_IN + stagger,
+    isLast ? 1 : segEnd - PRE_GAP - FADE_OUT,
+    isLast ? 1 : segEnd - PRE_GAP,
+  ]);
+  const bodyOpacity = useTransform(
+    progress,
+    bodyOffsets,
+    [isFirst ? 1 : 0, 1, 1, isLast ? 1 : 0]
+  );
+  const bodyY = useTransform(progress, bodyOffsets, [22, 0, 0, -12]);
+  const bodyBlur = useTransform(progress, bodyOffsets, [
+    "blur(6px)",
+    "blur(0px)",
+    "blur(0px)",
+    "blur(4px)",
+  ]);
+
+  return (
+    <div className="absolute inset-x-0 bottom-0">
+      <motion.div
+        style={{ opacity: eyebrowOpacity, x: eyebrowX }}
+        className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1 text-[10.5px] uppercase tracking-[0.22em] text-fg-muted font-semibold"
+      >
+        <span className="size-1.5 rounded-full bg-fg" />
+        {scene.eyebrow}
+      </motion.div>
+      <motion.p
+        style={{ opacity: bodyOpacity, y: bodyY, filter: bodyBlur }}
+        className="mt-3 text-[14px] leading-relaxed text-fg-muted"
+      >
+        {scene.body}
+      </motion.p>
+    </div>
+  );
+}
+
+/* ============================================================
+   Mobile · Snap carousel (unchanged from previous version —
+   scroll-jacking is too laggy on phones, native snap is fine)
+   ============================================================ */
 function MobileCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -250,233 +431,5 @@ function MobileCarousel() {
         ))}
       </div>
     </section>
-  );
-}
-
-function Backdrop({ progress }: { progress: MotionValue<number> }) {
-  const x1 = useTransform(progress, [0, 1], ["-10%", "20%"]);
-  const y1 = useTransform(progress, [0, 1], ["-5%", "15%"]);
-  const x2 = useTransform(progress, [0, 1], ["20%", "-10%"]);
-  const y2 = useTransform(progress, [0, 1], ["10%", "30%"]);
-
-  return (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
-      <motion.div
-        style={{ x: x1, y: y1 }}
-        className="absolute -top-32 -left-32 size-[600px] rounded-full glow-mist blur-3xl opacity-60"
-      />
-      <motion.div
-        style={{ x: x2, y: y2 }}
-        className="absolute top-1/3 -right-40 size-[500px] rounded-full glow-brand blur-3xl opacity-50"
-      />
-      <div className="absolute inset-0 bg-grid opacity-40" />
-    </div>
-  );
-}
-
-function SceneCopy({
-  index,
-  total,
-  progress,
-  eyebrow,
-  title,
-  body,
-  bullets,
-  stat,
-}: Scene & {
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const s = stops(index, total);
-  const opacity = useTransform(progress, s, [0, 1, 1, 0], { ease: screenEase });
-  const y = useTransform(progress, s, [50, 0, 0, -50], { ease: screenEase });
-  const zIndex = useTransform(progress, s, [0, 2, 2, 1]);
-
-  return (
-    <motion.div
-      style={{ opacity, y, zIndex, willChange: "transform, opacity" }}
-      className="absolute inset-0 flex flex-col justify-center"
-    >
-      <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-fg-muted self-start font-semibold">
-        <span className="size-1.5 rounded-full bg-fg" />
-        {eyebrow}
-      </div>
-      <h2 className="mt-5 font-display text-[clamp(1.8rem,4vw,3rem)] leading-[1.05] tracking-[-0.035em] font-extrabold text-fg max-w-2xl">
-        {title}
-      </h2>
-      <p className="mt-4 text-[15px] leading-relaxed text-fg-muted max-w-xl">
-        {body}
-      </p>
-
-      {/* Supporting bullets */}
-      <ul className="mt-5 space-y-2 max-w-xl">
-        {bullets.map((b) => (
-          <li
-            key={b}
-            className="flex items-start gap-2.5 text-[13.5px] leading-snug text-fg-muted"
-          >
-            <span className="mt-[7px] size-1.5 rounded-full bg-fg shrink-0" />
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Stat strip — optional per scene */}
-      {stat && (
-        <div className="mt-6 inline-flex items-baseline gap-3 self-start rounded-card border border-fg/10 bg-bg/70 backdrop-blur px-4 py-2.5">
-          <span className="font-display font-extrabold text-fg text-[clamp(1.5rem,2.6vw,2rem)] tracking-tight leading-none">
-            {stat.value}
-          </span>
-          <span className="text-[11px] uppercase tracking-[0.2em] text-fg-dim font-semibold">
-            {stat.label}
-          </span>
-        </div>
-      )}
-    </motion.div>
-  );
-}
-
-function SceneIndicator({
-  progress,
-  total,
-  scenes,
-}: {
-  progress: MotionValue<number>;
-  total: number;
-  scenes: Scene[];
-}) {
-  const idx = useTransform(progress, (v) =>
-    String(Math.min(total, Math.floor(v * total) + 1)).padStart(2, "0")
-  );
-
-  return (
-    <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3">
-      <div className="flex items-center gap-1.5">
-        {scenes.map((_, i) => (
-          <Dot key={i} index={i} total={total} progress={progress} />
-        ))}
-      </div>
-      <div className="text-[11px] uppercase tracking-[0.25em] text-fg-dim font-semibold flex items-center gap-1">
-        <motion.span>{idx}</motion.span>
-        <span>/ {String(total).padStart(2, "0")}</span>
-      </div>
-    </div>
-  );
-}
-
-function Dot({
-  index,
-  total,
-  progress,
-}: {
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const start = index / total;
-  const end = (index + 1) / total;
-  const eps = 1e-3;
-  const a = Math.max(0, start);
-  const b = Math.max(a + eps, Math.min(1, end));
-  const width = useTransform(progress, [a, b], ["10px", "32px"]);
-  const s = stops(index, total);
-  const opacity = useTransform(progress, s, [0.2, 1, 1, 0.2]);
-
-  return (
-    <motion.span
-      className="h-[3px] rounded-full bg-fg"
-      style={{ width, opacity }}
-    />
-  );
-}
-
-function PinnedPhone({
-  progress,
-  total,
-}: {
-  progress: MotionValue<number>;
-  total: number;
-}) {
-  // Subtle parallax — the device renders breathe slightly through the journey
-  const tilt = useTransform(progress, [0, 1], [-2, 2]);
-  const yFloat = useTransform(progress, [0, 1], [-10, 10]);
-
-  return (
-    <motion.div
-      style={{ rotate: tilt, y: yFloat, willChange: "transform" }}
-      // The trans/*.png mockups are rendered at ~6720x6000 (~1.12 : 1).
-      // The container locks that aspect so layered <Image> children fill
-      // it without distorting.
-      className="relative w-full max-w-[480px] mx-auto aspect-[112/100]"
-    >
-      <ScreenStack progress={progress} total={total} />
-    </motion.div>
-  );
-}
-
-function ScreenStack({
-  progress,
-  total,
-}: {
-  progress: MotionValue<number>;
-  total: number;
-}) {
-  return (
-    <div className="relative w-full h-full">
-      {scenes.map((s, i) => (
-        <ScreenLayer
-          key={s.eyebrow}
-          index={i}
-          total={total}
-          progress={progress}
-          image={s.image}
-          alt={s.title}
-        />
-      ))}
-    </div>
-  );
-}
-
-function ScreenLayer({
-  index,
-  total,
-  progress,
-  image,
-  alt,
-}: {
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-  image: string;
-  alt: string;
-}) {
-  const s = stops(index, total);
-  const opacity = useTransform(progress, s, [0, 1, 1, 0], { ease: screenEase });
-  const y = useTransform(progress, s, [56, 0, 0, -56], { ease: screenEase });
-  const scale = useTransform(progress, s, [0.94, 1, 1, 0.98], { ease: screenEase });
-  const zIndex = useTransform(progress, s, [0, 2, 2, 1]);
-
-  return (
-    <motion.div
-      style={{
-        opacity,
-        y,
-        scale,
-        zIndex,
-        willChange: "transform, opacity",
-      }}
-      className="absolute inset-0"
-    >
-      <Image
-        src={image}
-        alt={alt}
-        fill
-        sizes="(max-width: 1024px) 90vw, 480px"
-        className="object-contain select-none"
-        priority={index === 0}
-        draggable={false}
-      />
-    </motion.div>
   );
 }
