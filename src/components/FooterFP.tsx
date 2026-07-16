@@ -1,12 +1,15 @@
 "use client";
 
-import { Twitter, LinkedIn, Instagram, YouTube } from "./icons";
+import { Twitter, Telegram, Megaphone } from "./icons";
 
 const socials = [
-  { Icon: Twitter, href: "#", label: "X" },
-  { Icon: LinkedIn, href: "#", label: "LinkedIn" },
-  { Icon: Instagram, href: "#", label: "Instagram" },
-  { Icon: YouTube, href: "#", label: "YouTube" },
+  { Icon: Twitter, href: "https://x.com/unuswallet", label: "X" },
+  { Icon: Telegram, href: "https://t.me/UnusWallet", label: "Telegram" },
+  {
+    Icon: Megaphone,
+    href: "https://t.me/UnusWalletAnnouncements",
+    label: "Telegram Announcements",
+  },
 ];
 
 const quickLinks = [
@@ -95,6 +98,8 @@ export default function FooterFP() {
                   key={label}
                   href={href}
                   aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="size-9 sm:size-10 shrink-0 rounded-full bg-bg border border-fg/10 grid place-items-center text-fg-muted hover:text-fg hover:border-fg/30 transition-colors"
                 >
                   <Icon className="size-4" />

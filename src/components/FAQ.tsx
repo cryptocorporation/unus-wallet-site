@@ -20,7 +20,7 @@ const items = [
   },
   {
     q: "When will the sniper bot launch?",
-    a: "The world's first mobile multi-chain sniper bot is on the roadmap for Q1 2027. It will detect token launches in real time across every supported chain with MEV protection and honeypot detection built in.",
+    a: "The world's first mobile multi-chain sniper bot is on the roadmap for Q2 2027. It will detect token launches in real time across every supported chain with MEV protection and honeypot detection built in.",
   },
   {
     q: "What chains are supported?",

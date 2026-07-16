@@ -36,7 +36,7 @@ export default function Upcoming() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             <div className="p-6 sm:p-10 lg:p-14">
               <div className="inline-flex items-center gap-2 rounded-pill bg-[#0a0a0a]/15 border border-[#0a0a0a]/30 text-[#0a0a0a] px-3 py-1 text-[11px] uppercase tracking-[0.2em]">
-                Q1 2027
+                Q2 2027
               </div>
               <h3 className="mt-5 font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight tracking-[-0.025em] font-extrabold text-fg">
                 Multi-Chain Sniper Bot

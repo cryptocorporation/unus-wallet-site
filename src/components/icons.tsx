@@ -164,3 +164,18 @@ export const YouTube = (p: SVGProps<SVGSVGElement>) => (
     <path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none" />
   </svg>
 );
+
+export const Telegram = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M21.5 3.5 2.5 10.2l6.2 2.3 2.3 6.2z" />
+    <path d="M21.5 3.5 8.7 12.5l.9 6.2 3.1-3.6 5.4 2.9z" />
+  </svg>
+);
+
+export const Megaphone = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M4 9v4a1 1 0 0 0 1 1h3l7 4V4L8 8H5a1 1 0 0 0-1 1z" />
+    <path d="M19 9a3 3 0 0 1 0 6" />
+    <path d="M8 14v4a2 2 0 0 0 4 0v-1.7" />
+  </svg>
+);

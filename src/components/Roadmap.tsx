@@ -14,7 +14,7 @@ type Phase = {
 
 const phases: Phase[] = [
   {
-    quarter: "Q2 2026",
+    quarter: "Q3 2026",
     label: "Current · MVP Launch",
     status: "current",
     items: [
@@ -27,7 +27,7 @@ const phases: Phase[] = [
     ],
   },
   {
-    quarter: "Q3 2026",
+    quarter: "Q4 2026",
     label: "Enhanced Features",
     status: "next",
     items: [
@@ -40,7 +40,7 @@ const phases: Phase[] = [
     ],
   },
   {
-    quarter: "Q4 2026",
+    quarter: "Q1 2027",
     label: "Advanced Infrastructure",
     status: "later",
     items: [
@@ -51,7 +51,7 @@ const phases: Phase[] = [
     ],
   },
   {
-    quarter: "Q1 2027",
+    quarter: "Q2 2027",
     label: "Revolutionary Features",
     status: "later",
     items: [

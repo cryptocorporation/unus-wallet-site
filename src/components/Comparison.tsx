@@ -12,8 +12,8 @@ const rows: { label: string; others: Mark; unus: Mark }[] = [
   { label: "One-Click DeFi Actions", others: "no", unus: "yes" },
   { label: "NFT Tools", others: "yes", unus: "Advanced" },
   { label: "Perpetual Trading", others: "no", unus: "yes" },
-  { label: "Stock Trading", others: "no", unus: "Q3 2026" },
-  { label: "Multi-Chain Sniper", others: "no", unus: "Q1 2027" },
+  { label: "Stock Trading", others: "no", unus: "Q4 2026" },
+  { label: "Multi-Chain Sniper", others: "no", unus: "Q2 2027" },
 ];
 
 export default function Comparison() {
@@ -161,7 +161,7 @@ function Cell({ value, highlight }: { value: Mark; highlight?: boolean }) {
         <X className="size-4" strokeWidth={2} />
       </span>
     );
-  // Phase tag (e.g. "Advanced", "Q3 2026", "Q1 2027")
+  // Phase tag (e.g. "Advanced", "Q4 2026", "Q2 2027")
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-pill px-3 py-1.5 text-[12px] font-semibold ${
