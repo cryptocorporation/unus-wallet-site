@@ -17,30 +17,30 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://unuswallet.com"),
-  title: "Unus Wallet — One Wallet, Infinite Possibilities",
+  title: "Unus Wallet · One Wallet, Infinite Possibilities",
   description:
-    "Hold, swap, trade and explore — across every chain — from a single self-custody wallet.",
+    "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
   openGraph: {
     type: "website",
     url: "https://unuswallet.com",
     siteName: "Unus Wallet",
-    title: "Unus Wallet — One Wallet, Infinite Possibilities",
+    title: "Unus Wallet · One Wallet, Infinite Possibilities",
     description:
-      "Hold, swap, trade and explore — across every chain — from a single self-custody wallet.",
+      "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
     images: [
       {
         url: "/og-banner.png",
         width: 1200,
         height: 630,
-        alt: "Unus Wallet — One wallet. Infinite possibilities.",
+        alt: "Unus Wallet · One wallet. Infinite possibilities.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Unus Wallet — One Wallet, Infinite Possibilities",
+    title: "Unus Wallet · One Wallet, Infinite Possibilities",
     description:
-      "Hold, swap, trade and explore — across every chain — from a single self-custody wallet.",
+      "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
     images: ["/og-banner.png"],
   },
   other: {
