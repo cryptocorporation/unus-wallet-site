@@ -55,9 +55,9 @@ export default function FinalCTA() {
           </div>
 
           <div className="relative px-8 py-20 lg:py-28 text-center">
-            <div className="inline-flex items-center gap-2 rounded-pill border border-white/15 bg-white/5 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.2em] text-white/70">
+            <div className="inline-flex items-center gap-2 rounded-pill border border-white/15 bg-white/5 px-3.5 py-1.5 text-[12px] tracking-[0.08em] tabular-nums text-white/70">
               <span className="size-1.5 rounded-full bg-positive animate-pulse" />
-              Get started
+              Live on 7 chains
             </div>
             <h2 className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] leading-[1.04] tracking-[-0.035em] font-extrabold text-white">
               Join the future of

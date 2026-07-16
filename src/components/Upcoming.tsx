@@ -16,7 +16,7 @@ export default function Upcoming() {
     <section className="relative py-14 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Coming soon"
+          eyebrow="Sniper bot · Q2 2027"
           title={
             <>
               Onchain perps, tokenized stocks,{" "}

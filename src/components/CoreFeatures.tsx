@@ -101,7 +101,7 @@ export default function CoreFeatures() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-fg/10 to-transparent" />
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Core feature highlights"
+          eyebrow={`${features.length} features · 7 chains`}
           title={
             <>
               Unlock Web3 with simple, scalable tools,{" "}
@@ -222,7 +222,7 @@ export function SectionHeader({
       className={align === "center" ? "text-center max-w-3xl mx-auto" : "max-w-3xl"}
     >
       {eyebrow && (
-        <div className="inline-flex items-center gap-2 rounded-pill glass px-3.5 py-1.5 text-[11px] uppercase tracking-[0.2em] text-fg-muted">
+        <div className="inline-flex items-center gap-2 rounded-pill glass px-3.5 py-1.5 text-[12px] tracking-[0.08em] tabular-nums text-fg-muted">
           <span className="size-1.5 rounded-full bg-fg" />
           {eyebrow}
         </div>

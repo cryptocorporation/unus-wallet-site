@@ -21,7 +21,7 @@ export default function Comparison() {
     <section id="comparison" className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Feature comparison"
+          eyebrow={`${rows.length} features, side by side`}
           title={
             <>
               See how Unus Wallet's smart agent{" "}

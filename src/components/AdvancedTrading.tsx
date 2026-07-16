@@ -37,7 +37,7 @@ export default function AdvancedTrading() {
 
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Advanced Trading"
+          eyebrow="Leverage, stocks, and privacy"
           title={
             <>
               Features that go <span className="text-gradient">beyond a typical wallet.</span>

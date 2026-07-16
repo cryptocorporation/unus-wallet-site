@@ -50,7 +50,7 @@ export default function HowItWorks() {
     <section id="how" ref={ref} className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="How it works"
+          eyebrow={`${steps.length} steps, intent to result`}
           title={
             <>
               From your intent to{" "}

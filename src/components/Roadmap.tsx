@@ -102,7 +102,7 @@ function DesktopRoadmap() {
         {/* Header pinned at top */}
         <div className="pt-24 pb-6 px-5 lg:px-8">
           <SectionHeader
-            eyebrow="Our roadmap"
+            eyebrow={`${phases[0].quarter} → ${phases[phases.length - 1].quarter}`}
             title={
               <>
                 Building the{" "}
@@ -166,7 +166,7 @@ function MobileRoadmap() {
 
       <div className="px-5">
         <SectionHeader
-          eyebrow="Our roadmap"
+          eyebrow={`${phases[0].quarter} → ${phases[phases.length - 1].quarter}`}
           title={
             <>
               Building the{" "}

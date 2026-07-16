@@ -35,7 +35,7 @@ export default function FAQ() {
     <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="FAQ"
+          eyebrow={`The ${items.length} we get most`}
           title={<>Frequently asked questions.</>}
         />
 

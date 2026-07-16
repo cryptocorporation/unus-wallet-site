@@ -33,7 +33,7 @@ export default function Chains() {
     <section ref={ref} className="relative py-14 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Supported chains"
+          eyebrow={`${live.length} live · ${soon.length} queued`}
           title={
             <>
               Trade across{" "}
