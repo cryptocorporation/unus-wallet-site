@@ -16,14 +16,13 @@ export default function Upcoming() {
     <section className="relative py-14 lg:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Sniper bot · Q2 2027"
           title={
             <>
               Onchain perps, tokenized stocks,{" "}
               <span className="text-gradient">and the world's first mobile sniper bot.</span>
             </>
           }
-          subtitle="Soon, users will trade onchain perpetuals with leverage, access tokenized stock markets, and perform private, incognito swaps."
+          subtitle="Next up: onchain perpetuals with leverage, tokenized stock markets, and incognito swaps."
         />
 
         <motion.div

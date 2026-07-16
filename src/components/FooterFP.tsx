@@ -45,7 +45,7 @@ export default function FooterFP() {
             </div>
             <p className="mt-5 text-[14px] text-fg-muted max-w-sm leading-relaxed">
               One wallet, infinite possibilities. Omnichain finance, simplified
-              by an intelligent smart agent.
+              by a smart agent.
             </p>
             <div className="mt-5 text-[11px] uppercase tracking-[0.25em] text-fg-dim">
               There is no risk-free trading

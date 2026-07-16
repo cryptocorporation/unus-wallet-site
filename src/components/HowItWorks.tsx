@@ -14,7 +14,7 @@ const steps = [
   {
     n: "01",
     title: "User Intent",
-    body: "You simply choose what you want to do. No complex steps required.",
+    body: "You choose what you want to do. No route-planning, no bridge hunting.",
   },
   {
     n: "02",
@@ -24,7 +24,7 @@ const steps = [
   {
     n: "03",
     title: "Unus Wallet Executes",
-    body: "Secure cross-chain infrastructure carries out the action seamlessly.",
+    body: "Secure cross-chain infrastructure carries out the action.",
   },
   {
     n: "04",
@@ -50,7 +50,6 @@ export default function HowItWorks() {
     <section id="how" ref={ref} className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow={`${steps.length} steps, intent to result`}
           title={
             <>
               From your intent to{" "}

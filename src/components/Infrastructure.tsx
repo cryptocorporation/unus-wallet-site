@@ -67,7 +67,6 @@ export default function Infrastructure() {
     <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="The part you never see"
           title={
             <>
               Powered by{" "}

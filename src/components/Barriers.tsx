@@ -57,7 +57,6 @@ export default function Barriers() {
     <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow="Why you keep a second wallet"
           title={
             <>
               Traditional Web3{" "}

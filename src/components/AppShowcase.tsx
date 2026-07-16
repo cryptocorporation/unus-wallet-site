@@ -11,7 +11,6 @@ import {
 } from "framer-motion";
 
 export type Scene = {
-  eyebrow: string;
   title: string;
   body: string;
   bullets: string[];
@@ -21,7 +20,6 @@ export type Scene = {
 
 export const scenes: Scene[] = [
   {
-    eyebrow: "Welcome",
     title: "Meet your new wallet.",
     body: "One self-custody wallet for every chain you use. Hold, swap, trade and track your portfolio without juggling bridges, gas tokens or accounts.",
     bullets: [
@@ -32,7 +30,6 @@ export const scenes: Scene[] = [
     image: "/assets/trans/welcome.png",
   },
   {
-    eyebrow: "01 · Multi-chain dashboard",
     title: "All your assets. One clean view.",
     body: "ETH on Mainnet, BONK on Solana, FRAX on Arbitrum: every token and NFT, balanced and tracked side by side. Receive, send, swap or trade in a tap.",
     bullets: [
@@ -44,7 +41,6 @@ export const scenes: Scene[] = [
     image: "/assets/trans/1.png",
   },
   {
-    eyebrow: "02 · Cross-chain swaps",
     title: "Swap and bridge in one tap.",
     body: "Move value across chains without juggling bridges. The router picks the best route. Slippage, gas and ETA are shown up front.",
     bullets: [
@@ -55,7 +51,6 @@ export const scenes: Scene[] = [
     image: "/assets/trans/2.png",
   },
   {
-    eyebrow: "03 · Onchain trading",
     title: "Spot prices, candles, leverage.",
     body: "Open longs and shorts on the assets you already hold. Real-time PnL, decentralized execution, no order-book intermediaries.",
     bullets: [
@@ -162,7 +157,7 @@ function DesktopTypeTakeover() {
         <div className="absolute inset-0 flex items-center pointer-events-none">
           <div className="relative w-full lg:w-[55%] pl-[6vw] lg:pl-[8vw] pr-[6vw]">
             {scenes.map((s, i) => (
-              <HeadlineLayer key={s.eyebrow} scene={s} index={i} progress={smooth} />
+              <HeadlineLayer key={s.title} scene={s} index={i} progress={smooth} />
             ))}
           </div>
         </div>
@@ -170,7 +165,7 @@ function DesktopTypeTakeover() {
         {/* Eyebrow + body bottom-left, staggered slide-in */}
         <div className="absolute bottom-[6vh] left-[6vw] right-[6vw] lg:left-[8vw] lg:right-[42%] max-w-[520px]">
           {scenes.map((s, i) => (
-            <CopyLayer key={s.eyebrow} scene={s} index={i} progress={smooth} />
+            <CopyLayer key={s.title} scene={s} index={i} progress={smooth} />
           ))}
         </div>
       </div>
@@ -268,19 +263,8 @@ function CopyLayer({
   const segEnd = (index + 1) / N;
   const stagger = 0.018;
 
-  // Eyebrow uses the same opacity stops as the headline so all elements
-  // disappear and reappear together at the boundary — no straggler stays
-  // on screen during a swap.
-  const eyebrow = sceneOpacityStops(index);
-  const eyebrowOpacity = useTransform(
-    progress,
-    eyebrow.offsets,
-    eyebrow.values
-  );
-  const eyebrowX = useTransform(progress, eyebrow.offsets, [-32, 0, 0, -16]);
-
-  // Body slides in slightly later than headline+eyebrow (stagger). Its
-  // fade-out stops at the same pre-gap point as the rest of the scene.
+  // Body slides in slightly later than the headline (stagger). Its fade-out
+  // stops at the same pre-gap point as the rest of the scene.
   const bodyOffsets = sortedClamp([
     isFirst ? 0 : segStart + stagger,
     isFirst ? 0 : segStart + FADE_IN + stagger,
@@ -302,16 +286,9 @@ function CopyLayer({
 
   return (
     <div className="absolute inset-x-0 bottom-0">
-      <motion.div
-        style={{ opacity: eyebrowOpacity, x: eyebrowX }}
-        className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1 text-[10.5px] uppercase tracking-[0.22em] text-fg-muted font-semibold"
-      >
-        <span className="size-1.5 rounded-full bg-fg" />
-        {scene.eyebrow}
-      </motion.div>
       <motion.p
         style={{ opacity: bodyOpacity, y: bodyY, filter: bodyBlur }}
-        className="mt-3 text-[14px] leading-relaxed text-fg-muted"
+        className="text-[14px] leading-relaxed text-fg-muted"
       >
         {scene.body}
       </motion.p>
@@ -349,11 +326,7 @@ function MobileCarousel() {
       </div>
 
       <div className="px-5 mb-6">
-        <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-fg-muted font-semibold">
-          <span className="size-1.5 rounded-full bg-fg" />
-          App tour
-        </div>
-        <h2 className="mt-3 font-display text-[clamp(1.7rem,7vw,2.2rem)] leading-[1.05] tracking-[-0.03em] font-extrabold text-fg">
+        <h2 className="font-display text-[clamp(1.7rem,7vw,2.2rem)] leading-[1.05] tracking-[-0.03em] font-extrabold text-fg">
           One wallet. Every chain.
         </h2>
         <p className="mt-2 text-[14px] leading-relaxed text-fg-muted">
@@ -368,7 +341,7 @@ function MobileCarousel() {
       >
         {scenes.map((s) => (
           <article
-            key={s.eyebrow}
+            key={s.title}
             className="snap-center shrink-0 w-[calc(100vw-2.5rem)] max-w-[420px] rounded-2xl border border-fg/10 bg-bg overflow-hidden"
           >
             <div className="relative w-full aspect-[112/100] bg-bg-2">
@@ -381,10 +354,6 @@ function MobileCarousel() {
               />
             </div>
             <div className="p-5 space-y-3">
-              <div className="inline-flex items-center gap-2 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1 text-[10.5px] uppercase tracking-[0.22em] text-fg-muted font-semibold">
-                <span className="size-1.5 rounded-full bg-fg" />
-                {s.eyebrow}
-              </div>
               <h3 className="font-display text-[1.4rem] leading-tight tracking-tight font-extrabold text-fg">
                 {s.title}
               </h3>

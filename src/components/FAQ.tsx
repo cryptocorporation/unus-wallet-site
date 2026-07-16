@@ -16,7 +16,7 @@ const items = [
   },
   {
     q: "Is Unus non-custodial?",
-    a: "Yes. 100% non-custodial. Your keys never leave your device. Unus uses account abstraction so the UX feels effortless, but you remain in full control of your assets at all times.",
+    a: "Yes. 100% non-custodial. Your keys never leave your device. Unus uses account abstraction to hide the plumbing, but you remain in full control of your assets at all times.",
   },
   {
     q: "When will the sniper bot launch?",
@@ -35,7 +35,6 @@ export default function FAQ() {
     <section className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow={`The ${items.length} we get most`}
           title={<>Frequently asked questions.</>}
         />
 

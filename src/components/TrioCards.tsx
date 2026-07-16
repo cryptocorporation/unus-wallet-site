@@ -46,7 +46,7 @@ const items: Array<{
     icon: Wallet,
     eyebrow: "Powered by Unus",
     title: "Secure messaging across chains.",
-    body: "Enables secure messaging between different blockchains, allowing apps to communicate and transfer data effortlessly.",
+    body: "Enables secure messaging between different blockchains, allowing apps to communicate and transfer data.",
     // Wallet "open & close" flip
     anim: {
       animate: { rotateY: [0, 25, 0, -25, 0], scale: [1, 1.04, 1, 1.04, 1] },

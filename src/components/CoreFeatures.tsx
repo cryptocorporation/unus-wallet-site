@@ -60,7 +60,7 @@ const features = [
   {
     icon: Swap,
     title: "Cross-Chain Swaps",
-    body: "Instantly exchange assets across multiple blockchains with seamless interoperability.",
+    body: "Exchange assets across multiple blockchains from one screen.",
     color: "#0a0a0a",
   },
   {
@@ -101,7 +101,6 @@ export default function CoreFeatures() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-fg/10 to-transparent" />
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeader
-          eyebrow={`${features.length} features · 7 chains`}
           title={
             <>
               Unlock Web3 with simple, scalable tools,{" "}
@@ -203,12 +202,10 @@ export default function CoreFeatures() {
 }
 
 export function SectionHeader({
-  eyebrow,
   title,
   subtitle,
   align = "center",
 }: {
-  eyebrow?: string;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   align?: "left" | "center";
@@ -221,13 +218,7 @@ export function SectionHeader({
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       className={align === "center" ? "text-center max-w-3xl mx-auto" : "max-w-3xl"}
     >
-      {eyebrow && (
-        <div className="inline-flex items-center gap-2 rounded-pill glass px-3.5 py-1.5 text-[12px] tracking-[0.08em] tabular-nums text-fg-muted">
-          <span className="size-1.5 rounded-full bg-fg" />
-          {eyebrow}
-        </div>
-      )}
-      <h2 className="mt-5 font-display text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.02em] font-semibold">
+      <h2 className="font-display text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.02em] font-semibold">
         {title}
       </h2>
       {subtitle && (
