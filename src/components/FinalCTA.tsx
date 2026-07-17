@@ -74,7 +74,9 @@ export default function FinalCTA() {
                 Launch App <Arrow className="size-4" />
               </a>
               <a
-                href="#"
+                href="https://t.me/UnusWallet"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-pill border border-white/15 bg-white/5 px-7 py-3.5 text-sm text-white hover:bg-white/10 transition-colors"
               >
                 Join Community
