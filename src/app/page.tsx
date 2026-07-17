@@ -4,6 +4,7 @@ import TrioCards from "@/components/TrioCards";
 import AppShowcase from "@/components/AppShowcase";
 import CoreFeatures from "@/components/CoreFeatures";
 import AdvancedTrading from "@/components/AdvancedTrading";
+import AITraderMarketplace from "@/components/AITraderMarketplace";
 import Barriers from "@/components/Barriers";
 import HowItWorks from "@/components/HowItWorks";
 import Comparison from "@/components/Comparison";
@@ -25,6 +26,7 @@ export default function Home() {
         <AppShowcase />
         <CoreFeatures />
         <AdvancedTrading />
+        <AITraderMarketplace />
         <Barriers />
         <HowItWorks />
         <Comparison />

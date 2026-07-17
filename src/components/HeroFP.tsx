@@ -100,8 +100,8 @@ export default function HeroFP() {
           transition={{ duration: 0.85, ease, delay: 0.15 }}
           className="mt-6 max-w-2xl mx-auto text-[16px] leading-relaxed text-fg-muted"
         >
-          Hold, swap, trade and explore across every chain, from a single
-          self-custody wallet. Built for clarity. Designed for speed.
+          The only AI agentic wallet with perps and prediction markets built in.
+          Hold, swap, trade — or let your own trained AI trader do it for you.
         </motion.p>
 
         <motion.div

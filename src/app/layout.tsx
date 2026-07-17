@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://unuswallet.com"),
   title: "Unus Wallet · One Wallet, Infinite Possibilities",
   description:
-    "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
+    "The only AI agentic wallet with perpetuals, prediction markets, and a marketplace of AI trader models you can train, rent, and earn from.",
   openGraph: {
     type: "website",
     url: "https://unuswallet.com",
     siteName: "Unus Wallet",
     title: "Unus Wallet · One Wallet, Infinite Possibilities",
     description:
-      "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
+      "The only AI agentic wallet with perpetuals, prediction markets, and a marketplace of AI trader models you can train, rent, and earn from.",
     images: [
       {
         url: "/og-banner.png",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Unus Wallet · One Wallet, Infinite Possibilities",
     description:
-      "Hold, swap, trade and explore across every chain, from a single self-custody wallet.",
+      "The only AI agentic wallet with perpetuals, prediction markets, and a marketplace of AI trader models you can train, rent, and earn from.",
     images: ["/og-banner.png"],
   },
   other: {

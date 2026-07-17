@@ -61,8 +61,8 @@ export default function FinalCTA() {
               <span className="opacity-70">omnichain finance with Unus.</span>
             </h2>
             <p className="mt-6 text-[16px] text-white/60 max-w-xl mx-auto leading-relaxed">
-              One wallet. One smart agent. Every chain. Launch the app, or join
-              the community shaping it.
+              One wallet. Your own AI trader. Every chain — and every market.
+              Launch the app, or join the community shaping it.
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
               <a

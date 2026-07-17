@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SectionHeader } from "./CoreFeatures";
-import { Chart, Bolt, Lock } from "./icons";
+import { Chart, Bolt, Lock, Target } from "./icons";
 
 const cards = [
   {
@@ -26,6 +26,13 @@ const cards = [
     color: "#ebebeb",
     visual: "private",
   },
+  {
+    icon: Target,
+    title: "Prediction Markets",
+    body: "Trade on real-world outcomes directly from your wallet. Elections, sports, crypto events — take positions with the same self-custody guarantees as everything else in Unus.",
+    color: "#6b6b6b",
+    visual: "prediction",
+  },
 ] as const;
 
 export default function AdvancedTrading() {
@@ -45,7 +52,9 @@ export default function AdvancedTrading() {
           subtitle="Trade perpetuals, access tokenized stocks, and swap privately across chains."
         />
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* 2-up, not 3-up: the Prediction Markets card made this a 4-card grid,
+            and 3 columns stranded the 4th alone in an otherwise empty row. */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-5">
           {cards.map((c, i) => {
             const Icon = c.icon;
             return (
@@ -90,11 +99,12 @@ function Visual({
   variant,
   color,
 }: {
-  variant: "perp" | "stocks" | "private";
+  variant: "perp" | "stocks" | "private" | "prediction";
   color: string;
 }) {
   if (variant === "perp") return <PerpVisual color={color} />;
   if (variant === "stocks") return <StocksVisual color={color} />;
+  if (variant === "prediction") return <PredictionVisual />;
   return <PrivateVisual color={color} />;
 }
 
@@ -364,6 +374,54 @@ function PrivateVisual({ color }: { color: string }) {
           Incognito
         </motion.div>
       </div>
+    </div>
+  );
+}
+
+// Odds bars are the recognisable prediction-market UI, so the card shows that
+// rather than another chart. The percentages are illustrative; deliberately no
+// invented volume or price figure, since a wrong number on a crypto site gets
+// spotted instantly.
+function PredictionVisual() {
+  const outcomes = [
+    { label: "Yes", pct: 64, fill: "#16a34a" },
+    { label: "No", pct: 36, fill: "#0a0a0a" },
+  ];
+  return (
+    <div className="absolute inset-0 p-4 flex flex-col justify-center gap-3.5">
+      <div className="text-[10px] text-fg-dim font-medium">
+        Will BTC end the month up?
+      </div>
+      {outcomes.map((o, i) => (
+        <div key={o.label} className="space-y-1.5">
+          <div className="flex items-center justify-between text-[10px]">
+            <span className="font-semibold text-fg">{o.label}</span>
+            <motion.span
+              className="tabular-nums font-bold text-fg-muted"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.5 + i * 0.15 }}
+            >
+              {o.pct}%
+            </motion.span>
+          </div>
+          <div className="h-2 rounded-full bg-fg/8 overflow-hidden">
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: o.fill }}
+              initial={{ width: 0 }}
+              whileInView={{ width: `${o.pct}%` }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 1,
+                delay: 0.3 + i * 0.15,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

@@ -26,6 +26,14 @@ const items = [
     q: "What chains are supported?",
     a: "Live today: Ethereum, Arbitrum, Optimism, Base, BNB Chain, Polygon, and Avalanche. Solana, Cosmos, zkSync Era and additional L2s are coming through 2026 and 2027.",
   },
+  {
+    q: "How do I earn from the model marketplace?",
+    a: "Train a trading model, list it, and earn a percentage of fees whenever another user rents or hires it. Payouts are on-chain and transparent.",
+  },
+  {
+    q: "Do I need ML experience to train a model?",
+    a: "No. The agent guides the process — you set strategy, risk limits, and preferences; Unus handles the training.",
+  },
 ];
 
 export default function FAQ() {

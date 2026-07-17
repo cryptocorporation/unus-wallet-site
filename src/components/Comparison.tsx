@@ -14,6 +14,8 @@ const rows: { label: string; others: Mark; unus: Mark }[] = [
   { label: "Perpetual Trading", others: "no", unus: "yes" },
   { label: "Stock Trading", others: "no", unus: "Q4 2026" },
   { label: "Multi-Chain Sniper", others: "no", unus: "Q2 2027" },
+  { label: "Prediction Markets", others: "no", unus: "yes" },
+  { label: "AI Trader Marketplace", others: "no", unus: "yes" },
 ];
 
 export default function Comparison() {
@@ -131,7 +133,7 @@ export default function Comparison() {
               <span>⏱ = Coming soon. See roadmap for dates.</span>
               <span className="inline-flex items-center gap-1.5 text-fg-muted font-medium">
                 <span className="size-1.5 rounded-full bg-positive" />
-                7 of 7 features lead
+                9 of 9 features lead
               </span>
             </div>
           </div>
