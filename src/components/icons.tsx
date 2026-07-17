@@ -69,14 +69,6 @@ export const Brain = (p: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-export const Globe = (p: SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M3 12h18" />
-    <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z" />
-  </svg>
-);
-
 export const Shield = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}>
     <path d="M12 3 4 6v6c0 5 4 8 8 9 4-1 8-4 8-9V6l-8-3z" />
@@ -102,13 +94,6 @@ export const Gas = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}>
     <rect x="4" y="3" width="10" height="18" rx="1" />
     <path d="M14 8h2a2 2 0 0 1 2 2v6a1 1 0 0 0 2 0V9l-3-3" />
-  </svg>
-);
-
-export const Chat = (p: SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}>
-    <path d="M4 5h16v11H8l-4 4z" />
-    <path d="M8 10h8M8 13h5" />
   </svg>
 );
 
@@ -140,28 +125,6 @@ export const Plus = (p: SVGProps<SVGSVGElement>) => (
 export const Twitter = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}>
     <path d="M18 4h3l-7 8 8 9h-6l-5-6-6 6H2l8-9-8-9h6l4 5z" />
-  </svg>
-);
-
-export const LinkedIn = (p: SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}>
-    <rect x="3" y="3" width="18" height="18" rx="2" />
-    <path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 1 1 4 0v4M12 13v-3" />
-  </svg>
-);
-
-export const Instagram = (p: SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}>
-    <rect x="3" y="3" width="18" height="18" rx="5" />
-    <circle cx="12" cy="12" r="4" />
-    <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-  </svg>
-);
-
-export const YouTube = (p: SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}>
-    <rect x="2" y="5" width="20" height="14" rx="3" />
-    <path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none" />
   </svg>
 );
 
