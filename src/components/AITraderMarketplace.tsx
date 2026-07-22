@@ -61,7 +61,7 @@ export default function AITraderMarketplace() {
               <span className="text-gradient">Earn from it.</span>
             </>
           }
-          subtitle="Unus isn't just a wallet with an AI — it's a marketplace of them."
+          subtitle="Unus isn't just a wallet with an AI — it's a marketplace of them. Rolling out Q1 2027."
         />
 
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

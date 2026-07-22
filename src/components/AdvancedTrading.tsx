@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { SectionHeader } from "./CoreFeatures";
 import { Chart, Bolt, Lock, Target } from "./icons";
 
+// `status` keeps each card honest against the roadmap: perps ship in the
+// current MVP, the other three are Q4 2026. Without it the section reads as if
+// everything is live today, which contradicts the Roadmap section below.
 const cards = [
   {
     icon: Chart,
@@ -11,6 +14,7 @@ const cards = [
     body: "Open long or short positions with leverage directly inside your wallet. Real-time PnL, liquidation alerts, and decentralized execution keep you in control.",
     color: "#0a0a0a",
     visual: "perp",
+    status: "Live",
   },
   {
     icon: Bolt,
@@ -18,6 +22,7 @@ const cards = [
     body: "Access global stock markets on-chain. Buy and sell tokenized shares of Apple, Tesla, Amazon, all from your crypto wallet.",
     color: "#d4d4d4",
     visual: "stocks",
+    status: "Q4 2026",
   },
   {
     icon: Lock,
@@ -25,6 +30,7 @@ const cards = [
     body: "One-tap incognito swaps across chains. No sign-ups, no tracking.",
     color: "#ebebeb",
     visual: "private",
+    status: "Q4 2026",
   },
   {
     icon: Target,
@@ -32,6 +38,7 @@ const cards = [
     body: "Trade on real-world outcomes directly from your wallet. Elections, sports, crypto events — take positions with the same self-custody guarantees as everything else in Unus.",
     color: "#6b6b6b",
     visual: "prediction",
+    status: "Q4 2026",
   },
 ] as const;
 
@@ -76,8 +83,23 @@ export default function AdvancedTrading() {
                   <Visual variant={c.visual} color={c.color} />
                 </div>
                 <div className="p-6">
-                  <div className="size-10 rounded-lg grid place-items-center mb-4 bg-fg text-bg">
-                    <Icon className="size-5" />
+                  {/* Status pill lives in the content area, not on the visual —
+                      the perp/stocks visuals already use their top-right corner
+                      for PnL and prices, so an overlaid badge collided. */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="size-10 rounded-lg grid place-items-center bg-fg text-bg">
+                      <Icon className="size-5" />
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-fg-muted">
+                      {c.status === "Live" ? (
+                        <>
+                          <span className="size-1.5 rounded-full bg-positive" />
+                          Live
+                        </>
+                      ) : (
+                        c.status
+                      )}
+                    </span>
                   </div>
                   <h3 className="font-display text-lg tracking-tight font-bold text-fg">
                     {c.title}
@@ -114,7 +136,7 @@ function PerpVisual({ color }: { color: string }) {
   return (
     <div className="absolute inset-0 p-4 flex flex-col">
       <div className="flex items-center justify-between text-[10px] text-fg-dim">
-        <span className="font-medium">BTC-PERP · 5×</span>
+        <span className="font-medium">BTC-PERP</span>
         <motion.span
           className="font-bold text-positive tabular-nums"
           initial={{ opacity: 0, y: 4 }}

@@ -14,8 +14,8 @@ const rows: { label: string; others: Mark; unus: Mark }[] = [
   { label: "Perpetual Trading", others: "no", unus: "yes" },
   { label: "Stock Trading", others: "no", unus: "Q4 2026" },
   { label: "Multi-Chain Sniper", others: "no", unus: "Q2 2027" },
-  { label: "Prediction Markets", others: "no", unus: "yes" },
-  { label: "AI Trader Marketplace", others: "no", unus: "yes" },
+  { label: "Prediction Markets", others: "no", unus: "Q4 2026" },
+  { label: "AI Trader Marketplace", others: "no", unus: "Q1 2027" },
 ];
 
 export default function Comparison() {
@@ -84,7 +84,7 @@ export default function Comparison() {
               </motion.div>
             ))}
             <div className="text-[11px] text-fg-dim text-center pt-3">
-              ⏱ = Coming soon. See roadmap for dates.
+              Dates are target launch windows. See roadmap for details.
             </div>
           </div>
 
@@ -130,10 +130,10 @@ export default function Comparison() {
             ))}
 
             <div className="px-6 py-4 text-[11px] text-fg-dim border-t border-fg/8 flex items-center justify-between">
-              <span>⏱ = Coming soon. See roadmap for dates.</span>
+              <span>Dates are target launch windows. See roadmap for details.</span>
               <span className="inline-flex items-center gap-1.5 text-fg-muted font-medium">
                 <span className="size-1.5 rounded-full bg-positive" />
-                9 of 9 features lead
+                Live now, or on the roadmap
               </span>
             </div>
           </div>
