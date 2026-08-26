@@ -139,12 +139,12 @@ export default function HeroFP() {
           <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1">
             <img
               src="/assets/Robinhood.svg"
-              alt="Robinhood Chain"
+              alt="Robinhood"
               width={12}
               height={15}
               className="h-3.5 w-auto"
             />
-            Robinhood Chain
+            Robinhood
           </span>
         </motion.div>
       </div>
