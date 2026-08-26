@@ -130,11 +130,21 @@ export default function HeroFP() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.85, ease, delay: 0.4 }}
-          className="mt-5 inline-flex items-center gap-2 text-[12px] text-fg-muted"
+          className="mt-5 flex flex-col items-center gap-2 text-[12px] text-fg-muted"
         >
           <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1">
             <span className="size-1.5 rounded-full bg-fg/40" />
             iOS &amp; Android · Coming soon
+          </span>
+          <span className="inline-flex items-center gap-1.5 rounded-pill border border-fg/10 bg-bg-2 px-3 py-1">
+            <img
+              src="/assets/Robinhood.svg"
+              alt="Robinhood Chain"
+              width={12}
+              height={15}
+              className="h-3.5 w-auto"
+            />
+            Robinhood Chain
           </span>
         </motion.div>
       </div>
