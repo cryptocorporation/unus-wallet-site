@@ -17,7 +17,7 @@ const components: Array<{
 }> = [
   {
     icon: Wallet,
-    title: "Unus Wallet v2",
+    title: "Unus Wallet",
     body: "Secure omnichain messaging infrastructure.",
     // Wallet pulse — subtle scale + tiny lift
     anim: {
@@ -70,7 +70,7 @@ export default function Infrastructure() {
           title={
             <>
               Powered by{" "}
-              <span className="text-gradient">Unus Wallet v2.</span>
+              <span className="text-gradient">Unus Wallet.</span>
             </>
           }
           subtitle="Advanced tech stack: omnichain messaging, AI optimization, gas abstraction, and account abstraction, working in concert."

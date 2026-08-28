@@ -12,7 +12,7 @@ const items = [
   },
   {
     q: "How does the smart agent work?",
-    a: "The agent reads your intent, scans liquidity and pricing across supported chains, weighs gas, slippage, MEV risk and execution time, then proposes the optimal route. You approve, and Unus Wallet v2's omnichain infrastructure carries it out, usually in seconds.",
+    a: "The agent reads your intent, scans liquidity and pricing across supported chains, weighs gas, slippage, MEV risk and execution time, then proposes the optimal route. You approve, and Unus Wallet's omnichain infrastructure carries it out, usually in seconds.",
   },
   {
     q: "Is Unus non-custodial?",
